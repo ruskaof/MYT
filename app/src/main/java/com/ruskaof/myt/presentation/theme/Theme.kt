@@ -4,19 +4,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 
 data class AppColors(
     val primaryBackground: Color,
+    val primaryTextColor: Color,
+    val contrastTextColor: Color,
+    val perceptibleColoredTextColor: Color,
+    val primary: Color,
+    val secondary: Color
 )
 
 data class AppShapes(
-    val defaultShape: Shape
+    val defaultShape: Shape,
+    val defaultPaddingFromStart: Dp,
+    val bigPaddingFromStart: Dp
 )
 
 data class AppTypography(
-    val primaryTextStyle: TextStyle,
-    val makingPlanDataStyle: TextStyle
+    val int: Int = 1
 )
 
 

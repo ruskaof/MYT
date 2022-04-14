@@ -3,18 +3,18 @@ package com.ruskaof.myt.data.local.repository
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.ruskaof.myt.data.local.repository.PlanDbo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PlansDao {
     @Query("SELECT count(id) FROM plans")
-    suspend fun numberOfItemsInDB() : Int
+    suspend fun numberOfItemsInDB(): Int
 
-    @Query("SELECT * FROM plans")
-    suspend fun getAllPlans() : List<PlanDbo>
+    @Query("SELECT * FROM plans ORDER BY start_time")
+    fun getAllPlans(): Flow<List<PlanDbo>>
 
     @Query("DELETE FROM plans WHERE id = :id")
-     suspend fun removePlan(id: Int)
+    suspend fun removePlan(id: Int)
 
     @Insert(entity = PlanDbo::class)
     suspend fun insertPlan(planDbo: PlanDbo)

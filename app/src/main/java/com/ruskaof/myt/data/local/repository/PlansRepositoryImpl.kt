@@ -1,12 +1,13 @@
 package com.ruskaof.myt.data.local.repository
 
 import com.ruskaof.myt.domain.repository.PlansRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PlansRepositoryImpl @Inject constructor(
     private val plansDao: PlansDao
 ) : PlansRepository {
-    override suspend fun getPlans(): List<PlanDbo> {
+    override fun getPlans(): Flow<List<PlanDbo>> {
         return plansDao.getAllPlans()
     }
 

@@ -9,71 +9,77 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import com.ruskaof.myt.common.niceTime
 import java.time.LocalDateTime
-import java.util.*
 
 @Composable
 fun DateTimePickerField(
     context: Context,
     textStyle: TextStyle,
     label: String,
-    setTime: (LocalDateTime) -> Unit,
+    setTime: (hour: Int, minute: Int) -> Unit,
+    setDate: (year: Int, month: Int, day: Int) -> Unit,
+    time: LocalDateTime,
+    timeSurfaceColor: Color
 ) {
-    val calendar = Calendar.getInstance()
 
-    var year = calendar.get(Calendar.YEAR)
-    var month = calendar.get(Calendar.MONTH)
-    var day = calendar.get(Calendar.DAY_OF_MONTH)
+    val selectedDate =
+        "${time.dayOfMonth}/${time.monthValue}/${time.year}"
 
-    var hour = calendar.get(Calendar.HOUR_OF_DAY)
-    var minute = calendar.get(Calendar.MINUTE)
-
-    var selectedDate by remember {
-        mutableStateOf("$day/$month/$year")
-    }
-    var selectedTime by remember {
-        mutableStateOf(niceTime(hour, minute))
-    }
+    val selectedTime =
+        niceTime(time.hour, time.minute)
 
     val datePickerDialog = DatePickerDialog(
         context,
         { _: DatePicker, newYear: Int, newMonth: Int, newDayOfMonth: Int ->
-            selectedDate = "$newDayOfMonth/$newMonth/$newYear"
-            year = newYear
-            month = newMonth
-            day = newDayOfMonth
+            setDate(newYear, newMonth, newDayOfMonth)
             Log.d("PICKER", "DateTimePickerField: changed")
-            setTime(LocalDateTime.of(year, month, day, hour, minute))
-        }, year, month, day
+        }, time.year, time.monthValue, time.dayOfMonth
     )
     val timePickerDialog = TimePickerDialog(
         context,
         { _, newHour: Int, newMinute: Int ->
-            selectedTime = niceTime(newHour, newMinute)
-            hour = newHour
-            minute = newMinute
-            Log.d("PICKER", "DateTimePickerField: changed")
-            setTime(LocalDateTime.of(year, month, day, hour, minute))
-        }, hour, minute, true
+            setTime(newHour, newMinute)
+        }, time.hour, time.minute, true
     )
 
     Row(modifier = Modifier.fillMaxWidth()) {
-        Text(text = label, style = textStyle, modifier = Modifier.weight(2f))
-        Column(modifier = Modifier.weight(4f)) {
-            Text(text = selectedDate, style = textStyle, modifier = Modifier
-                .clickable {
-                    datePickerDialog.show()
-                }
-            )
-            Text(text = selectedTime, style = textStyle, modifier = Modifier
-                .clickable {
-                    timePickerDialog.show()
-                })
+        Text(
+            text = label,
+            style = textStyle,
+            modifier = Modifier.weight(2f),
+            textAlign = TextAlign.Center
+        )
+
+        Surface(
+            modifier = Modifier.weight(4f),
+            color = timeSurfaceColor,
+            shape = RoundedCornerShape(30)
+        ) {
+            Column(modifier = Modifier.weight(4f)) {
+                Text(text = selectedDate, style = textStyle, modifier = Modifier
+                    .clickable {
+                        datePickerDialog.show()
+                    }
+                    .fillMaxWidth(), textAlign = TextAlign.Center
+                )
+                Text(text = selectedTime, style = textStyle, modifier = Modifier
+                    .clickable {
+                        timePickerDialog.show()
+                    }
+                    .fillMaxWidth(), textAlign = TextAlign.Center
+                )
+            }
         }
     }
+
+
 }
