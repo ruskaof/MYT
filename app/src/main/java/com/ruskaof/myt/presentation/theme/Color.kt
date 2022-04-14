@@ -7,9 +7,10 @@ val lightColorPallet = AppColors(
     primaryTextColor = Color.Black,
 
     primaryBackground = Color.White,
-    primary = Color(0xFF5C6BC0),
+    primary = Color(0xFF00897B),
     secondary = Color(0xFFB3E5FC),
-    perceptibleColoredTextColor = Color(0xFFAB47BC)
+    perceptibleColoredTextColor = Color(0xFFAB47BC),
+    dialogColor = Color(0xffffffff)
 )
 
 val darkColorPallet = AppColors(
@@ -18,5 +19,6 @@ val darkColorPallet = AppColors(
     primary = Color(0xFF673AB7),
     secondary = Color(0xFFB3E5FC),
     contrastTextColor = Color.Black,
-    perceptibleColoredTextColor = Color(0xFF2196F3)
+    perceptibleColoredTextColor = Color(0xFF2196F3),
+    dialogColor = Color(0xffffffff)
 )

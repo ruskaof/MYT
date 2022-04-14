@@ -9,6 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -17,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ruskaof.myt.presentation.Screen
 import com.ruskaof.myt.presentation.main.screen_main.components.NewDayHeader
+import com.ruskaof.myt.presentation.main.screen_main.components.OnLongPressDialog
 import com.ruskaof.myt.presentation.main.screen_main.components.PlanListItem
 import com.ruskaof.myt.presentation.main.screen_new_plan.components.TopBar
 import com.ruskaof.myt.presentation.theme.AppTheme
@@ -27,6 +30,10 @@ fun MainScreen(
     navController: NavController
 ) {
     val listState = viewModel.getAllPlans().collectAsState(initial = emptyList())
+    val dialogIsOpen = remember { mutableStateOf(false) }
+    val selectedPlanId = remember {
+        mutableStateOf<Long?>(null)
+    }
 
     Scaffold(
         floatingActionButton = {
@@ -43,6 +50,13 @@ fun MainScreen(
             )
         }
     ) {
+        if (dialogIsOpen.value) {
+            OnLongPressDialog(openDialogCustom = dialogIsOpen, onOk = {
+                viewModel.removePlan(selectedPlanId.value!!)
+            }, onCancel = {})
+        }
+
+
         LazyColumn {
             itemsIndexed(listState.value) { index, plan ->
                 val nextDayStarted =
@@ -62,9 +76,9 @@ fun MainScreen(
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Light
                     ),
-                    onClick = { id ->
-                        viewModel.removePlan(id)
-                        viewModel.getAllPlans()
+                    onLongPress = { id ->
+                        selectedPlanId.value = id
+                        dialogIsOpen.value = true
                     },
                     planNameTextStyle = TextStyle(
                         color = AppTheme.colors.contrastTextColor,
@@ -74,6 +88,7 @@ fun MainScreen(
                     ),
                     paddingStart = AppTheme.shapes.bigPaddingFromStart
                 )
+
             }
         }
     }

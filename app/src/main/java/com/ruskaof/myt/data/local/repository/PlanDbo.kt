@@ -9,8 +9,10 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "plans")
 data class PlanDbo(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "start_time") val startTime: String,
-    @ColumnInfo(name = "end_time") val endTime : String
-)
+    @ColumnInfo(name = "end_time") val endTime: String
+) {
+
+}

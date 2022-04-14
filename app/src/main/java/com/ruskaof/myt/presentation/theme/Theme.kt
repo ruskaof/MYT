@@ -12,7 +12,8 @@ data class AppColors(
     val contrastTextColor: Color,
     val perceptibleColoredTextColor: Color,
     val primary: Color,
-    val secondary: Color
+    val secondary: Color,
+    val dialogColor: Color
 )
 
 data class AppShapes(

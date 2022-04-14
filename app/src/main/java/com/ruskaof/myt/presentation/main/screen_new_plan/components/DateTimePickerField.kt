@@ -40,9 +40,9 @@ fun DateTimePickerField(
     val datePickerDialog = DatePickerDialog(
         context,
         { _: DatePicker, newYear: Int, newMonth: Int, newDayOfMonth: Int ->
-            setDate(newYear, newMonth, newDayOfMonth)
+            setDate(newYear, newMonth + 1, newDayOfMonth)
             Log.d("PICKER", "DateTimePickerField: changed")
-        }, time.year, time.monthValue, time.dayOfMonth
+        }, time.year, time.monthValue - 1, time.dayOfMonth
     )
     val timePickerDialog = TimePickerDialog(
         context,

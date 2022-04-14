@@ -1,12 +1,13 @@
 package com.ruskaof.myt.presentation.main.screen_main.components
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,13 +39,15 @@ fun PlanListItem(
     ),
     planNameTextStyle: TextStyle = TextStyle(color = Color.White),
     paddingStart: Dp,
-    onClick: (Int) -> Unit = {}
+    onLongPress: (Long) -> Unit = {}
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                onClick(plan.id)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onLongPress = { onLongPress(plan.id) },
+                )
             }
     ) {
         Row(

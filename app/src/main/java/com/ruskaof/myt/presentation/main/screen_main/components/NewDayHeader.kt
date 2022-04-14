@@ -21,7 +21,7 @@ fun NewDayHeader(
         modifier = Modifier.padding(start = AppTheme.shapes.defaultPaddingFromStart)
     ) {
         Text(
-            localDateTime.dayOfWeek.minus(4).toString().lowercase()
+            localDateTime.dayOfWeek.toString().lowercase()
                 .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
             style = TextStyle(
                 color = AppTheme.colors.perceptibleColoredTextColor,

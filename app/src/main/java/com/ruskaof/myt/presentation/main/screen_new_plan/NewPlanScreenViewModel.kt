@@ -1,11 +1,13 @@
 package com.ruskaof.myt.presentation.main.screen_new_plan
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ruskaof.myt.domain.model.Plan
 import com.ruskaof.myt.domain.use_case.plans.WritePlanUseCase
+import com.ruskaof.myt.presentation.main.screen_new_plan.components.Period
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -18,7 +20,7 @@ class NewPlanScreenViewModel @Inject constructor(
 ) : ViewModel() {
     private val currentTime = LocalDateTime.of(
         Calendar.getInstance().get(Calendar.YEAR),
-        Calendar.getInstance().get(Calendar.MONTH),
+        Calendar.getInstance().get(Calendar.MONTH) + 1,
         Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
         Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
         Calendar.getInstance().get(Calendar.MINUTE),
@@ -37,21 +39,87 @@ class NewPlanScreenViewModel @Inject constructor(
         }
     }
 
+    fun writePlan(
+        name: String,
+        startTime: LocalDateTime,
+        endTime: LocalDateTime,
+        period: Period,
+        times: Int
+    ) {
+        when (period) {
+            Period.DAY -> {
+                for (i in 0 until times) {
+                    viewModelScope.launch {
+                        writePlanUseCase(
+                            Plan(
+                                name,
+                                startTime.plusDays(1 * i.toLong()),
+                                endTime.plusDays(1 * i.toLong())
+                            )
+                        )
+                    }
+                }
+            }
+            Period.WEEK -> {
+                for (i in 0 until times) {
+                    viewModelScope.launch {
+                        writePlanUseCase(
+                            Plan(
+                                name,
+                                startTime.plusWeeks(i.toLong()),
+                                endTime.plusWeeks(i.toLong())
+                            )
+                        )
+                    }
+                }
+            }
+            Period.TWO_WEEKS -> {
+                for (i in 0 until times) {
+                    viewModelScope.launch {
+                        writePlanUseCase(
+                            Plan(
+                                name,
+                                startTime.plusWeeks(2 * i.toLong()),
+                                endTime.plusWeeks(2 * i.toLong())
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     fun setStartTime(hour: Int, minute: Int) {
         _startTimeState.value = _startTimeState.value.withHour(hour).withMinute(minute)
+        Log.d(
+            "MAIN_TAG",
+            "setStartTime: set start with hour $hour minute $minute. Current state is ${startTimeState.value}"
+        )
     }
 
     fun setStartDate(year: Int, month: Int, day: Int) {
         _startTimeState.value =
             _startTimeState.value.withYear(year).withMonth(month).withDayOfMonth(day)
+        Log.d(
+            "MAIN_TAG",
+            "setStartDate: set start with year $year month $month day $day. Current state is ${startTimeState.value}"
+        )
     }
 
     fun setEndTime(hour: Int, minute: Int) {
         _endTimeState.value = _endTimeState.value.withHour(hour).withMinute(minute)
+        Log.d(
+            "MAIN_TAG",
+            "setEndTime: set end with hour $hour minute $minute. Current state is ${endTimeState.value}"
+        )
     }
 
     fun setEndDate(year: Int, month: Int, day: Int) {
         _endTimeState.value =
             _endTimeState.value.withYear(year).withMonth(month).withDayOfMonth(day)
+        Log.d(
+            "MAIN_TAG",
+            "setEndDate: set end with year $year month $month day $day. Current state is ${endTimeState.value}"
+        )
     }
 }

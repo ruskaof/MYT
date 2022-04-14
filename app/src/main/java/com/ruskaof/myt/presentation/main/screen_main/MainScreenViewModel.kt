@@ -19,7 +19,7 @@ class MainScreenViewModel @Inject constructor(
         return getAllPlansUseCase()
     }
 
-    fun removePlan(id: Int) {
+    fun removePlan(id: Long) {
         viewModelScope.launch {
             removePlanUseCase.invoke(id)
         }
