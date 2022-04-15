@@ -15,10 +15,10 @@ interface PlansDao {
     fun getAllPlans(): Flow<List<PlanDbo>>
 
     @Query("DELETE FROM plans WHERE id = :id")
-    fun removePlan(id: Long)
+    suspend fun removePlan(id: Long)
 
     @Insert(entity = PlanDbo::class)
-    fun insertPlan(planDbo: PlanDbo): Long
+    suspend fun insertPlan(planDbo: PlanDbo): Long
 
     @Update(entity = PlanDbo::class)
     fun updatePlan(planDbo: PlanDbo)

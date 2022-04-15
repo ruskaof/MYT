@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.ruskaof.myt.domain.model.Plan
 import com.ruskaof.myt.domain.use_case.plans.WritePlanUseCase
 import com.ruskaof.myt.presentation.main.screen_new_plan.components.Period
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.*
@@ -34,7 +34,7 @@ class NewPlanScreenViewModel @Inject constructor(
     val endTimeState: State<LocalDateTime> = _endTimeState
 
     fun writePlan(name: String, startTime: LocalDateTime, endTime: LocalDateTime) {
-        viewModelScope.launch {
+        MainScope().launch {
             writePlanUseCase(Plan(name, startTime, endTime))
         }
     }
@@ -49,7 +49,7 @@ class NewPlanScreenViewModel @Inject constructor(
         when (period) {
             Period.DAY -> {
                 for (i in 0 until times) {
-                    viewModelScope.launch {
+                    MainScope().launch {
                         writePlanUseCase(
                             Plan(
                                 name,
@@ -62,7 +62,7 @@ class NewPlanScreenViewModel @Inject constructor(
             }
             Period.WEEK -> {
                 for (i in 0 until times) {
-                    viewModelScope.launch {
+                    MainScope().launch {
                         writePlanUseCase(
                             Plan(
                                 name,
@@ -75,7 +75,7 @@ class NewPlanScreenViewModel @Inject constructor(
             }
             Period.TWO_WEEKS -> {
                 for (i in 0 until times) {
-                    viewModelScope.launch {
+                    MainScope().launch {
                         writePlanUseCase(
                             Plan(
                                 name,

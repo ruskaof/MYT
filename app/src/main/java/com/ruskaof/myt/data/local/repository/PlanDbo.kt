@@ -13,6 +13,4 @@ data class PlanDbo(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "start_time") val startTime: String,
     @ColumnInfo(name = "end_time") val endTime: String
-) {
-
-}
+)

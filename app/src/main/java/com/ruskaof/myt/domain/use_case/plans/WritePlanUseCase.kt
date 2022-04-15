@@ -10,7 +10,8 @@ class WritePlanUseCase @Inject constructor(
     private val plansRepository: PlansRepository
 ) {
     suspend operator fun invoke(plan: Plan) {
-        Log.d("MAIN_TAG", "writePlan: $plan")
+        Log.d("MAIN_TAG", "start to plansRepository.writePlan(plan.toPlanDbo()): $plan")
         plansRepository.writePlan(plan.toPlanDbo())
+        Log.d("MAIN_TAG", "end of plansRepository.writePlan(plan.toPlanDbo()): $plan")
     }
 }
