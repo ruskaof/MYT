@@ -114,8 +114,25 @@ fun NewPlanScreen(
 
             Spacer(modifier = Modifier.size(20.dp))
 
+            DatePickerField(
+                context = context,
+                textStyle = TextStyle(
+                    color = AppTheme.colors.primaryTextColor,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Light
+                ),
+                label = "Date",
+                setDate = { year, month, day ->
+                    viewModel.setStartDate(year, month, day)
+                    viewModel.setEndDate(year, month, day)
+                },
+                time = viewModel.endTimeState.value,
+                timeSurfaceColor = AppTheme.colors.secondary
+            )
 
-            DateTimePickerField(
+            Spacer(modifier = Modifier.size(20.dp))
+
+            TimePickerField(
                 context = context,
                 textStyle = TextStyle(
                     color = AppTheme.colors.primaryTextColor,
@@ -124,7 +141,7 @@ fun NewPlanScreen(
                 ),
                 label = "Start",
                 setTime = { hour, minute -> viewModel.setStartTime(hour, minute) },
-                setDate = { year, month, day -> viewModel.setStartDate(year, month, day) },
+                //setDate = { year, month, day -> viewModel.setStartDate(year, month, day) },
                 time = viewModel.startTimeState.value,
                 timeSurfaceColor = AppTheme.colors.secondary
             )
@@ -133,7 +150,7 @@ fun NewPlanScreen(
             Spacer(modifier = Modifier.size(20.dp))
 
 
-            DateTimePickerField(
+            TimePickerField(
                 context = context,
                 textStyle = TextStyle(
                     color = AppTheme.colors.primaryTextColor,
@@ -142,7 +159,7 @@ fun NewPlanScreen(
                 ),
                 label = "End",
                 setTime = { hour, minute -> viewModel.setEndTime(hour, minute) },
-                setDate = { year, month, day -> viewModel.setEndDate(year, month, day) },
+                //setDate = { year, month, day -> viewModel.setEndDate(year, month, day) },
                 time = viewModel.endTimeState.value,
                 timeSurfaceColor = AppTheme.colors.secondary
             )

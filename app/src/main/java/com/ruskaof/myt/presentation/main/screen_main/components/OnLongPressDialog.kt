@@ -23,8 +23,9 @@ import com.ruskaof.myt.presentation.theme.AppTheme
 private fun OnLongPressDialogUI(
     dialogIsOpen: MutableState<Boolean>,
     onOk: () -> Unit,
-    onCancel: () -> Unit
-) {
+    onCancel: () -> Unit,
+
+    ) {
     Card(
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
@@ -44,7 +45,8 @@ private fun OnLongPressDialogUI(
                     style = TextStyle(
                         color = AppTheme.colors.primaryTextColor,
                         fontSize = 27.sp,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Light
                     )
                 )
             }
@@ -71,7 +73,7 @@ private fun OnLongPressDialogUI(
                 }) {
                     Text(
                         "Ok",
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Light,
                         color = AppTheme.colors.primaryTextColor,
                         modifier = Modifier.padding(top = 5.dp, bottom = 5.dp),
                         fontSize = 20.sp
