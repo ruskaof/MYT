@@ -23,6 +23,7 @@ import com.ruskaof.myt.presentation.main.screen_main.components.OnLongPressDialo
 import com.ruskaof.myt.presentation.main.screen_main.components.PlanListItem
 import com.ruskaof.myt.presentation.main.screen_new_plan.components.TopBar
 import com.ruskaof.myt.presentation.theme.AppTheme
+import java.time.LocalDateTime
 
 @Composable
 fun MainScreen(
@@ -62,7 +63,8 @@ fun MainScreen(
                 val nextDayStarted =
                     index == 0 || listState.value[index].startTime.dayOfMonth != listState.value[index - 1].startTime.dayOfMonth || listState.value[index].startTime.month != listState.value[index - 1].startTime.month || listState.value[index].startTime.year != listState.value[index - 1].startTime.year
                 if (nextDayStarted) {
-                    NewDayHeader(localDateTime = plan.startTime)
+                    val isToday = LocalDateTime.now().dayOfYear == plan.startTime.dayOfYear
+                    NewDayHeader(localDateTime = plan.startTime, isToday)
                 }
                 PlanListItem(
                     plan = plan,

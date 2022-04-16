@@ -1,15 +1,20 @@
 package com.ruskaof.myt.presentation
 
+import CustomEasing
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ruskaof.myt.presentation.main.screen_main.MainScreen
 import com.ruskaof.myt.presentation.main.screen_new_plan.NewPlanScreen
@@ -20,11 +25,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val context = this
-            val isDarkModeValue = isSystemInDarkTheme();
+            val isDarkModeValue = isSystemInDarkTheme()
             val isDarkMode = remember { mutableStateOf(isDarkModeValue) }
             val systemUiController = rememberSystemUiController()
 
@@ -37,23 +43,50 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            val navController = rememberNavController()
+            val navController = rememberAnimatedNavController()
             MainTheme(
                 darkTheme = isDarkMode.value
             ) {
-                NavHost(
+                AnimatedNavHost(
                     navController = navController,
                     startDestination = Screen.MainScreen.route
                 ) {
                     composable(
-                        route = Screen.MainScreen.route
+                        route = Screen.MainScreen.route,
+                        enterTransition = { _, _ ->
+                            slideInHorizontally(
+                                initialOffsetX = { it }, // small slide 300px
+                                animationSpec = tween(
+                                    durationMillis = 300,
+                                    easing = CustomEasing // interpolator
+                                )
+                            )
+                        },
                     )
                     {
-                        MainScreen(navController =  navController)
+                        MainScreen(navController = navController)
                     }
 
                     composable(
-                        route = Screen.NewPlanScreen.route
+                        route = Screen.NewPlanScreen.route,
+                        enterTransition = { _, _ ->
+                            slideInHorizontally(
+                                initialOffsetX = { it }, // small slide 300px
+                                animationSpec = tween(
+                                    durationMillis = 300,
+                                    easing = CustomEasing // interpolator
+                                )
+                            )
+                        },
+                        popExitTransition = { _, _ ->
+                            slideOutHorizontally(
+                                // small slide 300px
+                                animationSpec = tween(
+                                    durationMillis = 300,
+                                    easing = CustomEasing // interpolator
+                                )
+                            )
+                        },
                     )
                     {
                         NewPlanScreen(context = context, navController = navController)

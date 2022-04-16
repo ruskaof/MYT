@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.ruskaof.myt.common.Constants
 import com.ruskaof.myt.presentation.main.screen_new_plan.components.*
 import com.ruskaof.myt.presentation.theme.AppTheme
 
@@ -100,9 +101,11 @@ fun NewPlanScreen(
         ) {
             PlanNameTextField(
                 caption = "Name",
-                maxLength = 20,
+                maxLength = Constants.MAX_PLAN_NAME_LENGTH,
                 textState = writePlanName,
-                onValueChange = { if (it.length <= 20) writePlanName = it },
+                onValueChange = {
+                    if (it.length <= Constants.MAX_PLAN_NAME_LENGTH) writePlanName = it
+                },
                 clearText = { writePlanName = "" },
                 labelsColor = AppTheme.colors.primaryTextColor,
                 backgroundColor = AppTheme.colors.secondary
