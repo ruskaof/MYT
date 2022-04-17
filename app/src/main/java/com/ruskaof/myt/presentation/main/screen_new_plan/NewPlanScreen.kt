@@ -90,6 +90,7 @@ fun NewPlanScreen(
                 text = "New plan"
             )
         },
+        backgroundColor = AppTheme.colors.primaryBackground
     ) {
         Column(
             modifier = Modifier

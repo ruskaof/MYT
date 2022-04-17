@@ -1,5 +1,6 @@
 package com.ruskaof.myt.presentation.main.screen_main
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.FloatingActionButton
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -49,7 +51,8 @@ fun MainScreen(
             TopBar(
                 text = "Schedule"
             )
-        }
+        },
+        backgroundColor = AppTheme.colors.primaryBackground
     ) {
         if (dialogIsOpen.value) {
             OnLongPressDialog(openDialogCustom = dialogIsOpen, onOk = {
@@ -58,7 +61,9 @@ fun MainScreen(
         }
 
 
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier.background(AppTheme.colors.primaryBackground)
+        ) {
             itemsIndexed(listState.value) { index, plan ->
                 val nextDayStarted =
                     index == 0 || listState.value[index].startTime.dayOfMonth != listState.value[index - 1].startTime.dayOfMonth || listState.value[index].startTime.month != listState.value[index - 1].startTime.month || listState.value[index].startTime.year != listState.value[index - 1].startTime.year

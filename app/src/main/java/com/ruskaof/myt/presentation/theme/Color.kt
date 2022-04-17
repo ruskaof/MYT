@@ -14,11 +14,12 @@ val lightColorPallet = AppColors(
 )
 
 val darkColorPallet = AppColors(
-    primaryBackground = Color.Black,
-    primaryTextColor = Color.White,
-    primary = Color(0xFF673AB7),
-    secondary = Color(0xFFB3E5FC),
-    contrastTextColor = Color.Black,
-    perceptibleColoredTextColor = Color(0xFF2196F3),
+    contrastTextColor = Color.White,
+    primaryTextColor = Color(0xFFDADADA),
+
+    primaryBackground = Color(0xFF1A1A1A),
+    primary = Color(0xFF00897B),
+    secondary = Color(0xFF3F5058),
+    perceptibleColoredTextColor = Color(0xFFAB47BC),
     dialogColor = Color(0xffffffff)
 )
