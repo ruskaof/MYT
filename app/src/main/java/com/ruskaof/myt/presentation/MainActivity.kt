@@ -18,6 +18,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ruskaof.myt.presentation.main.screen_main.MainScreen
 import com.ruskaof.myt.presentation.main.screen_new_plan.NewPlanScreen
+import com.ruskaof.myt.presentation.main.screen_splash.AnimatedSplashScreen
 import com.ruskaof.myt.presentation.theme.MainTheme
 import com.ruskaof.myt.presentation.theme.darkColorPallet
 import com.ruskaof.myt.presentation.theme.lightColorPallet
@@ -49,8 +50,15 @@ class MainActivity : ComponentActivity() {
             ) {
                 AnimatedNavHost(
                     navController = navController,
-                    startDestination = Screen.MainScreen.route
+                    startDestination = Screen.AnimatedSplashScreen.route
                 ) {
+
+                    composable(
+                        route = Screen.AnimatedSplashScreen.route
+                    ) {
+                        AnimatedSplashScreen(navController)
+                    }
+
                     composable(
                         route = Screen.MainScreen.route,
                         enterTransition = { _, _ ->
