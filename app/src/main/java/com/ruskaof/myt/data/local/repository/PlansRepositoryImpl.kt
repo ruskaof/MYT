@@ -3,13 +3,17 @@ package com.ruskaof.myt.data.local.repository
 import android.util.Log
 import com.ruskaof.myt.domain.repository.PlansRepository
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class PlansRepositoryImpl @Inject constructor(
     private val plansDao: PlansDao
 ) : PlansRepository {
-    override fun getPlans(): Flow<List<PlanDbo>> {
-        return plansDao.getAllPlans()
+
+    private val today = LocalDateTime.now().withHour(0).withMinute(0).withNano(0).toString()
+
+    override fun getPlansAfterToday(): Flow<List<PlanDbo>> {
+        return plansDao.getAllPlansAfter(today)
     }
 
     override suspend fun writePlan(plan: PlanDbo) {

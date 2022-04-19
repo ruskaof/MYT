@@ -6,8 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +29,9 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val screenChangeDuration = 200
+
         setContent {
             val context = this
             val isDarkModeValue = isSystemInDarkTheme()
@@ -62,10 +65,17 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = Screen.MainScreen.route,
                         enterTransition = { _, _ ->
-                            slideInHorizontally(
-                                initialOffsetX = { it }, // small slide 300px
+                            fadeIn(
                                 animationSpec = tween(
-                                    durationMillis = 300,
+                                    durationMillis = screenChangeDuration,
+                                    easing = CustomEasing // interpolator
+                                )
+                            )
+                        },
+                        exitTransition = { _, _ ->
+                            fadeOut(
+                                animationSpec = tween(
+                                    durationMillis = screenChangeDuration,
                                     easing = CustomEasing // interpolator
                                 )
                             )
@@ -78,19 +88,17 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = Screen.NewPlanScreen.route,
                         enterTransition = { _, _ ->
-                            slideInHorizontally(
-                                initialOffsetX = { it }, // small slide 300px
+                            fadeIn(
                                 animationSpec = tween(
-                                    durationMillis = 300,
+                                    durationMillis = screenChangeDuration,
                                     easing = CustomEasing // interpolator
                                 )
                             )
                         },
-                        popExitTransition = { _, _ ->
-                            slideOutHorizontally(
-                                // small slide 300px
+                        exitTransition = { _, _ ->
+                            fadeOut(
                                 animationSpec = tween(
-                                    durationMillis = 300,
+                                    durationMillis = screenChangeDuration,
                                     easing = CustomEasing // interpolator
                                 )
                             )
