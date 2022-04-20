@@ -1,5 +1,6 @@
 package com.ruskaof.myt.presentation.main.screen_main
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ruskaof.myt.domain.model.Plan
@@ -15,6 +16,10 @@ class MainScreenViewModel @Inject constructor(
     private val getAllPlansAfterTodayUseCase: GetAllPlansAfterTodayUseCase,
     private val removePlanUseCase: RemovePlanUseCase
 ) : ViewModel() {
+    val State = object {
+        val lazyListState = LazyListState()
+    }
+
     fun getAllPlans(): Flow<List<Plan>> {
         return getAllPlansAfterTodayUseCase()
     }

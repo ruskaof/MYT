@@ -1,15 +1,16 @@
 package com.ruskaof.myt.presentation
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
+import com.ruskaof.myt.presentation.animation.enterTransitionAnimation
+import com.ruskaof.myt.presentation.animation.exitTransitionAnimation
 import com.ruskaof.myt.presentation.main.navigation.BottomNavigationItem
 import com.ruskaof.myt.presentation.main.screen_main.MainScreen
 import com.ruskaof.myt.presentation.main.screen_menu.MenuScreen
@@ -36,35 +37,66 @@ fun NavigationComponent(
         composable(
             route = Screen.MainScreen.route,
             enterTransition = { initial, target ->
-                if (target.destination.route == BottomNavigationItem.Menu.route &&
-                    target.destination.route == BottomNavigationItem.Schedule.route
+                Log.d(
+                    "MAIN_TAG",
+                    "NavigationComponent main screen enter: initial: ${initial.destination.route} target: ${target.destination.route}"
+                )
+                if (initial.destination.route == BottomNavigationItem.Menu.route ||
+                    initial.destination.route == BottomNavigationItem.Schedule.route
                 ) {
-                    slideInHorizontally(
-                        initialOffsetX = { it },
-                        animationSpec = tween(300)
-                    )
-                } else {
                     EnterTransition.None
+                } else {
+                    enterTransitionAnimation()
                 }
             },
-            exitTransition = { _, _ -> ExitTransition.None }
+            exitTransition = { initial, target ->
+                Log.d(
+                    "MAIN_TAG",
+                    "NavigationComponent main screen exit: initial: ${initial.destination.route} target: ${target.destination.route}"
+                )
+                if (target.destination.route == BottomNavigationItem.Menu.route ||
+                    target.destination.route == BottomNavigationItem.Schedule.route
+                ) {
+                    ExitTransition.None
+                } else {
+                    exitTransitionAnimation()
+                }
+            }
         ) {
             MainScreen(navController = navController)
         }
 
-        composable(
-            route = Screen.NewPlanScreen.route,
-        ) {
-            NewPlanScreen(context = context, navController = navController)
-        }
 
         composable(
             route = Screen.MenuScreen.route,
-            enterTransition = { _, _ -> EnterTransition.None },
-            exitTransition = { _, _ -> ExitTransition.None }
+            enterTransition = { initial, target ->
+                if (initial.destination.route == BottomNavigationItem.Menu.route ||
+                    initial.destination.route == BottomNavigationItem.Schedule.route
+                ) {
+                    EnterTransition.None
+                } else {
+                    enterTransitionAnimation()
+                }
+            },
+            exitTransition = { initial, target ->
+                if (target.destination.route == BottomNavigationItem.Menu.route ||
+                    target.destination.route == BottomNavigationItem.Schedule.route
+                ) {
+                    ExitTransition.None
+                } else {
+                    exitTransitionAnimation()
+                }
+            }
         ) {
             MenuScreen(navController = navController)
         }
 
+        composable(
+            route = Screen.NewPlanScreen.route,
+            enterTransition = { _, _ -> enterTransitionAnimation() },
+            exitTransition = { _, _ -> exitTransitionAnimation() }
+        ) {
+            NewPlanScreen(context = context, navController = navController)
+        }
     }
 }
