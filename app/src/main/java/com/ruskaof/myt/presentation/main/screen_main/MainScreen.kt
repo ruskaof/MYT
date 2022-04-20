@@ -1,5 +1,6 @@
 package com.ruskaof.myt.presentation.main.screen_main
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -31,8 +32,10 @@ import java.time.LocalDateTime
 @Composable
 fun MainScreen(
     viewModel: MainScreenViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
 ) {
+    Log.d("testingtag", "MainScreen: ${navController.backQueue}")
+
     val listState = viewModel.getAllPlans().collectAsState(initial = emptyList())
     val dialogIsOpen = remember { mutableStateOf(false) }
     val selectedPlanId = remember {
@@ -71,6 +74,7 @@ fun MainScreen(
 
         LazyColumn(
             modifier = Modifier.background(AppTheme.colors.primaryBackground),
+            state = viewModel.lazyListState
         ) {
             itemsIndexed(listState.value) { index, plan ->
                 val nextDayStarted =

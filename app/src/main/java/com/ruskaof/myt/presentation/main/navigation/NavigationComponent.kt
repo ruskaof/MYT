@@ -1,7 +1,6 @@
 package com.ruskaof.myt.presentation
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -21,7 +20,7 @@ import com.ruskaof.myt.presentation.main.screen_splash.AnimatedSplashScreen
 @Composable
 fun NavigationComponent(
     navController: NavHostController,
-    context: Context
+    context: Context,
 ) {
     AnimatedNavHost(
         navController = navController,
@@ -37,10 +36,6 @@ fun NavigationComponent(
         composable(
             route = Screen.MainScreen.route,
             enterTransition = { initial, target ->
-                Log.d(
-                    "MAIN_TAG",
-                    "NavigationComponent main screen enter: initial: ${initial.destination.route} target: ${target.destination.route}"
-                )
                 if (initial.destination.route == BottomNavigationItem.Menu.route ||
                     initial.destination.route == BottomNavigationItem.Schedule.route
                 ) {
@@ -50,10 +45,6 @@ fun NavigationComponent(
                 }
             },
             exitTransition = { initial, target ->
-                Log.d(
-                    "MAIN_TAG",
-                    "NavigationComponent main screen exit: initial: ${initial.destination.route} target: ${target.destination.route}"
-                )
                 if (target.destination.route == BottomNavigationItem.Menu.route ||
                     target.destination.route == BottomNavigationItem.Schedule.route
                 ) {
