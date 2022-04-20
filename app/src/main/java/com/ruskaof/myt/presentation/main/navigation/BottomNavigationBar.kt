@@ -1,4 +1,4 @@
-package com.ruskaof.myt.presentation.main.bottom_navigation
+package com.ruskaof.myt.presentation.main.navigation
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -20,8 +20,8 @@ fun BottomNavigationBar(
     navController: NavController
 ) {
     val items = listOf(
-        NavigationItem.Schedule,
-        NavigationItem.Menu
+        BottomNavigationItem.Schedule,
+        BottomNavigationItem.Menu
     )
 
     BottomNavigation(

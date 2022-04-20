@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ruskaof.myt.presentation.Screen
-import com.ruskaof.myt.presentation.main.bottom_navigation.BottomNavigationBar
+import com.ruskaof.myt.presentation.main.navigation.BottomNavigationBar
 import com.ruskaof.myt.presentation.main.screen_main.components.NewDayHeader
 import com.ruskaof.myt.presentation.main.screen_main.components.OnLongPressDialog
 import com.ruskaof.myt.presentation.main.screen_main.components.PlanListItem
