@@ -20,6 +20,9 @@ interface PlansDao {
     @Query("DELETE FROM plans WHERE id = :id")
     suspend fun removePlan(id: Long)
 
+    @Query("DELETE FROM plans")
+    suspend fun removeAllPlans()
+
     @Insert(entity = PlanDbo::class)
     suspend fun insertPlan(planDbo: PlanDbo): Long
 

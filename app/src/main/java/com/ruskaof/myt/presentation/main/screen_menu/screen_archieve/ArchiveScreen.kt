@@ -3,7 +3,9 @@ package com.ruskaof.myt.presentation.main.screen_menu.screen_archieve
 import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,6 +30,11 @@ fun ArchiveScreen(
 
     Scaffold(
         topBar = { TopBar(text = "Archive") },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { viewModel.removeAllPlans() }) {
+                Text("Clear", style = TextStyle(color = AppTheme.colors.primaryTextColor))
+            }
+        }
     ) {
         LazyColumn(modifier = Modifier.background(AppTheme.colors.primaryBackground)) {
             itemsIndexed(listState) { index, plan ->
@@ -51,7 +58,7 @@ fun ArchiveScreen(
                         fontWeight = FontWeight.Light
                     ),
                     onLongPress = {
-                        // TODO
+
                     },
                     planNameTextStyle = TextStyle(
                         color = AppTheme.colors.contrastTextColor,

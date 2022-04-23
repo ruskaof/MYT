@@ -20,6 +20,10 @@ class PlansRepositoryImpl @Inject constructor(
         return plansDao.getAllPlansBefore(today)
     }
 
+    override suspend fun removeAllPlans() {
+        plansDao.removeAllPlans()
+    }
+
     override suspend fun writePlan(plan: PlanDbo) {
         try {
             plansDao.insertPlan(plan)
