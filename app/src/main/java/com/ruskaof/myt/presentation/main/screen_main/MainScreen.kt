@@ -71,7 +71,8 @@ fun MainScreen(
 
 
         LazyColumn(
-            modifier = Modifier.background(AppTheme.colors.primaryBackground)
+            modifier = Modifier
+                .background(AppTheme.colors.primaryBackground)
         ) {
             itemsIndexed(listState) { index, plan ->
                 val nextDayStarted =

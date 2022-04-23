@@ -36,7 +36,7 @@ private fun OnLongPressDialogUI(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
+                    .padding(vertical = 30.dp, horizontal = 10.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -60,7 +60,7 @@ private fun OnLongPressDialogUI(
                 }) {
                     Text(
                         "Cancel",
-                        fontWeight = FontWeight.Light,
+                        fontWeight = FontWeight.Normal,
                         color = AppTheme.colors.primaryTextColor,
                         modifier = Modifier.padding(top = 5.dp, bottom = 5.dp),
                         fontSize = 20.sp
@@ -72,7 +72,7 @@ private fun OnLongPressDialogUI(
                 }) {
                     Text(
                         "Ok",
-                        fontWeight = FontWeight.Light,
+                        fontWeight = FontWeight.Normal,
                         color = AppTheme.colors.primaryTextColor,
                         modifier = Modifier.padding(top = 5.dp, bottom = 5.dp),
                         fontSize = 20.sp

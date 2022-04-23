@@ -1,15 +1,15 @@
 package com.ruskaof.myt.presentation.main.screen_new_plan.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ruskaof.myt.presentation.theme.AppTheme
 
@@ -17,9 +17,10 @@ import com.ruskaof.myt.presentation.theme.AppTheme
 fun TopBar(
     text: String
 ) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        color = Color.Transparent
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 5.dp),
     ) {
         Text(
             text = text,

@@ -1,17 +1,20 @@
 package com.ruskaof.myt.presentation.main.navigation
 
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.ruskaof.myt.presentation.common.BOTTOM_NAVIGATION_HEIGHT
 
 @Composable
 fun BottomNavigationBar(
@@ -26,6 +29,7 @@ fun BottomNavigationBar(
 
     BottomNavigation(
         backgroundColor = backgroundColor,
+        modifier = Modifier.height(BOTTOM_NAVIGATION_HEIGHT)
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route

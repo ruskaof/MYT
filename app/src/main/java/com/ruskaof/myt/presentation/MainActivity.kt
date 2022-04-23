@@ -8,8 +8,10 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.ruskaof.myt.presentation.main.navigation.NavigationComponent
 import com.ruskaof.myt.presentation.theme.MainTheme
 import com.ruskaof.myt.presentation.theme.darkColorPallet
 import com.ruskaof.myt.presentation.theme.lightColorPallet
@@ -38,7 +40,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            val navController = rememberNavController()
+            val navController: NavHostController = rememberNavController()
 
             MainTheme(
                 darkTheme = isDarkMode.value

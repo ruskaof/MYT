@@ -1,4 +1,6 @@
-package com.ruskaof.myt.presentation
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+
+package com.ruskaof.myt.presentation.main.navigation
 
 import android.content.Context
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -6,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.ruskaof.myt.presentation.Screen
 import com.ruskaof.myt.presentation.main.screen_main.MainScreen
 import com.ruskaof.myt.presentation.main.screen_menu.MenuScreen
 import com.ruskaof.myt.presentation.main.screen_new_plan.NewPlanScreen
@@ -30,7 +33,7 @@ fun NavigationComponent(
 
         composable(
             route = Screen.MainScreen.route,
-//            enterTransition = { initial, target ->
+//            enterTransition = { initial, _ ->
 //                if (initial.destination.route == BottomNavigationItem.Menu.route ||
 //                    initial.destination.route == BottomNavigationItem.Schedule.route
 //                ) {
@@ -39,7 +42,7 @@ fun NavigationComponent(
 //                    enterTransitionAnimation()
 //                }
 //            },
-//            exitTransition = { initial, target ->
+//            exitTransition = { _, target ->
 //                if (target.destination.route == BottomNavigationItem.Menu.route ||
 //                    target.destination.route == BottomNavigationItem.Schedule.route
 //                ) {
@@ -55,7 +58,7 @@ fun NavigationComponent(
 
         composable(
             route = Screen.MenuScreen.route,
-//            enterTransition = { initial, target ->
+//            enterTransition = { initial, _ ->
 //                if (initial.destination.route == BottomNavigationItem.Menu.route ||
 //                    initial.destination.route == BottomNavigationItem.Schedule.route
 //                ) {
@@ -64,7 +67,7 @@ fun NavigationComponent(
 //                    enterTransitionAnimation()
 //                }
 //            },
-//            exitTransition = { initial, target ->
+//            exitTransition = { _, target ->
 //                if (target.destination.route == BottomNavigationItem.Menu.route ||
 //                    target.destination.route == BottomNavigationItem.Schedule.route
 //                ) {

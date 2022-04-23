@@ -1,7 +1,7 @@
 package com.ruskaof.myt.presentation.main.screen_main.components
 
-import android.util.Log
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +17,7 @@ import com.ruskaof.myt.common.niceTime
 import com.ruskaof.myt.domain.model.Plan
 import com.ruskaof.myt.presentation.theme.AppTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlanListItem(
     plan: Plan,
@@ -37,10 +38,10 @@ fun PlanListItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                Log.d("MAIN_TAG", "PRESSING ON $plan")
-                onLongPress()
-            }
+            .combinedClickable(
+                onClick = {},
+                onLongClick = { onLongPress() }
+            )
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
