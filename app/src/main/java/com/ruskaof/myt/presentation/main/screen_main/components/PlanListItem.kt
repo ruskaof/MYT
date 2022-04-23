@@ -1,32 +1,25 @@
 package com.ruskaof.myt.presentation.main.screen_main.components
 
-import androidx.compose.foundation.gestures.detectTapGestures
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ruskaof.myt.common.niceTime
 import com.ruskaof.myt.domain.model.Plan
 import com.ruskaof.myt.presentation.theme.AppTheme
-import java.time.LocalDateTime
 
 @Composable
 fun PlanListItem(
-    plan: Plan = Plan(
-        "Example name",
-        startTime = LocalDateTime.of(2022, 9, 20, 13, 34),
-        endTime = LocalDateTime.of(2022, 9, 20, 15, 4),
-        id = 5
-    ),
+    plan: Plan,
     startTimeStyle: TextStyle = TextStyle(
         color = Color.Black,
         fontSize = 25.sp,
@@ -39,15 +32,14 @@ fun PlanListItem(
     ),
     planNameTextStyle: TextStyle = TextStyle(color = Color.White),
     paddingStart: Dp,
-    onLongPress: (Long) -> Unit = {}
+    onLongPress: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onLongPress = { onLongPress(plan.id) },
-                )
+            .clickable {
+                Log.d("MAIN_TAG", "PRESSING ON $plan")
+                onLongPress()
             }
     ) {
         Row(
@@ -63,8 +55,7 @@ fun PlanListItem(
                 Text(niceTime(plan.startTime), style = startTimeStyle)
                 Text(niceTime(plan.endTime), style = endTimeStyle)
             }
-            Box(
-            ) {
+            Box {
                 TextInOval(
                     text = plan.name,
                     ovalColor = AppTheme.colors.primary,
@@ -77,8 +68,3 @@ fun PlanListItem(
 
 
 
-@Preview (showBackground = true)
-@Composable
-fun PlanListItemPreview() {
-    PlanListItem(paddingStart = 15.dp)
-}

@@ -9,10 +9,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -20,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.ruskaof.myt.domain.model.Plan
 import com.ruskaof.myt.presentation.Screen
 import com.ruskaof.myt.presentation.main.navigation.BottomNavigationBar
 import com.ruskaof.myt.presentation.main.screen_main.components.NewDayHeader
@@ -36,10 +34,10 @@ fun MainScreen(
 ) {
     Log.d("testingtag", "MainScreen: ${navController.backQueue}")
 
-    val listState = viewModel.getAllPlans().collectAsState(initial = emptyList())
+    val listState: List<Plan> by viewModel.getAllPlans().collectAsState(initial = emptyList())
     val dialogIsOpen = remember { mutableStateOf(false) }
     val selectedPlanId = remember {
-        mutableStateOf<Long?>(null)
+        mutableStateOf<Long>(0)
     }
 
     Scaffold(
@@ -67,18 +65,17 @@ fun MainScreen(
     ) {
         if (dialogIsOpen.value) {
             OnLongPressDialog(openDialogCustom = dialogIsOpen, onOk = {
-                viewModel.removePlan(selectedPlanId.value!!)
+                viewModel.removePlan(selectedPlanId.value)
             }, onCancel = {})
         }
 
 
         LazyColumn(
-            modifier = Modifier.background(AppTheme.colors.primaryBackground),
-            state = viewModel.lazyListState
+            modifier = Modifier.background(AppTheme.colors.primaryBackground)
         ) {
-            itemsIndexed(listState.value) { index, plan ->
+            itemsIndexed(listState) { index, plan ->
                 val nextDayStarted =
-                    index == 0 || listState.value[index].startTime.dayOfMonth != listState.value[index - 1].startTime.dayOfMonth || listState.value[index].startTime.month != listState.value[index - 1].startTime.month || listState.value[index].startTime.year != listState.value[index - 1].startTime.year
+                    index == 0 || listState[index].startTime.dayOfYear != listState[index - 1].startTime.dayOfYear || listState[index].startTime.year != listState[index - 1].startTime.year
                 if (nextDayStarted) {
                     val isToday = LocalDateTime.now().dayOfYear == plan.startTime.dayOfYear
                     NewDayHeader(localDateTime = plan.startTime, isToday)
@@ -95,9 +92,10 @@ fun MainScreen(
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Light
                     ),
-                    onLongPress = { id ->
-                        selectedPlanId.value = id
+                    onLongPress = {
+                        selectedPlanId.value = plan.id
                         dialogIsOpen.value = true
+                        Log.d("MAIN_tag", "MainScreen: ${plan.id} selected")
                     },
                     planNameTextStyle = TextStyle(
                         color = AppTheme.colors.contrastTextColor,

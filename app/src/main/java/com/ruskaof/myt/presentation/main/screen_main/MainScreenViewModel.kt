@@ -1,5 +1,6 @@
 package com.ruskaof.myt.presentation.main.screen_main
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.ViewModel
 import com.ruskaof.myt.domain.model.Plan
@@ -23,8 +24,9 @@ class MainScreenViewModel @Inject constructor(
     }
 
     fun removePlan(id: Long) {
+        Log.d("MAIN_TAG", "removePlan: $id")
         MainScope().launch {
-            removePlanUseCase.invoke(id)
+            removePlanUseCase(id)
         }
     }
 }

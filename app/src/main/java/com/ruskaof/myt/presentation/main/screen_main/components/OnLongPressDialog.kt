@@ -24,7 +24,6 @@ private fun OnLongPressDialogUI(
     dialogIsOpen: MutableState<Boolean>,
     onOk: () -> Unit,
     onCancel: () -> Unit,
-
     ) {
     Card(
         shape = RoundedCornerShape(10.dp),

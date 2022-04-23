@@ -17,16 +17,15 @@ class PlansRepositoryImpl @Inject constructor(
     }
 
     override suspend fun writePlan(plan: PlanDbo) {
-        Log.d("MAIN_TAG", "start to plansDao.insertPlan(plan): $plan")
         try {
             plansDao.insertPlan(plan)
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        Log.d("MAIN_TAG", "end of plansDao.insertPlan(plan): $plan")
     }
 
     override suspend fun removePlan(id: Long) {
+        Log.d("MAIN_TAG", "removePlan: $id")
         plansDao.removePlan(id)
     }
 }
