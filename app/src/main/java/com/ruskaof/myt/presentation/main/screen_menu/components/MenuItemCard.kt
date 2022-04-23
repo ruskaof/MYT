@@ -26,12 +26,13 @@ fun MenuItemCard(
 ) {
     Surface(
         modifier = Modifier
-            .size(size)
-            .clickable { onClick() },
+            .size(size),
         shape = RoundedCornerShape(10),
         elevation = 5.dp
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .clickable { onClick() }) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,

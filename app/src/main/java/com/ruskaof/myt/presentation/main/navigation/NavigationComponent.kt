@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import com.ruskaof.myt.presentation.Screen
 import com.ruskaof.myt.presentation.main.screen_main.MainScreen
 import com.ruskaof.myt.presentation.main.screen_menu.MenuScreen
+import com.ruskaof.myt.presentation.main.screen_menu.screen_archieve.ArchiveScreen
 import com.ruskaof.myt.presentation.main.screen_new_plan.NewPlanScreen
 import com.ruskaof.myt.presentation.main.screen_splash.AnimatedSplashScreen
 
@@ -86,6 +87,12 @@ fun NavigationComponent(
 //            exitTransition = { _, _ -> exitTransitionAnimation() }
         ) {
             NewPlanScreen(context = context, navController = navController)
+        }
+
+        composable(
+            route = Screen.ArchiveScreen.route
+        ) {
+            ArchiveScreen()
         }
     }
 }

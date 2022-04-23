@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PlansRepository {
     fun getPlansAfterToday(): Flow<List<PlanDbo>>
+    fun getPlansBeforeToday(): Flow<List<PlanDbo>>
     suspend fun writePlan(plan: PlanDbo)
     suspend fun removePlan(id: Long)
 }

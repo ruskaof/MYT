@@ -16,6 +16,10 @@ class PlansRepositoryImpl @Inject constructor(
         return plansDao.getAllPlansAfter(today)
     }
 
+    override fun getPlansBeforeToday(): Flow<List<PlanDbo>> {
+        return plansDao.getAllPlansBefore(today)
+    }
+
     override suspend fun writePlan(plan: PlanDbo) {
         try {
             plansDao.insertPlan(plan)

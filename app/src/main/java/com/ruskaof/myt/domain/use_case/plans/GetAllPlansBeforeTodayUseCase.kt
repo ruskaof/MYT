@@ -5,11 +5,11 @@ import com.ruskaof.myt.domain.repository.PlansRepository
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetAllPlansAfterTodayUseCase @Inject constructor(
+class GetAllPlansBeforeTodayUseCase @Inject constructor(
     private val plansRepository: PlansRepository
 ) {
     operator fun invoke() =
-        plansRepository.getPlansAfterToday().map { list ->
+        plansRepository.getPlansBeforeToday().map { list ->
             list.map { item ->
                 val plan = item.toPlan()
                 plan

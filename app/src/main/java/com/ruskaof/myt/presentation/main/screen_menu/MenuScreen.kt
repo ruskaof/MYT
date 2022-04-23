@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.ruskaof.myt.presentation.Screen
 import com.ruskaof.myt.presentation.main.navigation.BottomNavigationBar
 import com.ruskaof.myt.presentation.main.screen_menu.components.MenuItemCard
 import com.ruskaof.myt.presentation.main.screen_new_plan.components.TopBar
@@ -43,7 +44,7 @@ fun MenuScreen(
             MenuItemCard(
                 icon = Icons.Default.Info,
                 iconColor = AppTheme.colors.secondary,
-                onClick = {})
+                onClick = { navController.navigate(Screen.ArchiveScreen.route) })
         }
     }
 }

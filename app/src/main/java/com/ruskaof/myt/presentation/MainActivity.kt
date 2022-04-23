@@ -4,14 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ruskaof.myt.presentation.main.navigation.NavigationComponent
+import com.ruskaof.myt.presentation.theme.AppTheme
 import com.ruskaof.myt.presentation.theme.MainTheme
 import com.ruskaof.myt.presentation.theme.darkColorPallet
 import com.ruskaof.myt.presentation.theme.lightColorPallet
@@ -45,7 +50,13 @@ class MainActivity : ComponentActivity() {
             MainTheme(
                 darkTheme = isDarkMode.value
             ) {
-                NavigationComponent(navController = navController, context = context)
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(AppTheme.colors.primaryBackground)
+                ) {
+                    NavigationComponent(navController = navController, context = context)
+                }
             }
         }
     }
