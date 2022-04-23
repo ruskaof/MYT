@@ -8,5 +8,5 @@ interface PlansRepository {
     fun getPlansBeforeToday(): Flow<List<PlanDbo>>
     suspend fun writePlan(plan: PlanDbo)
     suspend fun removePlan(id: Long)
-    suspend fun removeAllPlans()
+    suspend fun removePassedPlans()
 }
