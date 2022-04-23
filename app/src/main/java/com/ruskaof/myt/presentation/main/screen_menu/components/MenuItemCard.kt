@@ -1,5 +1,6 @@
 package com.ruskaof.myt.presentation.main.screen_menu.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -24,7 +25,9 @@ fun MenuItemCard(
     onClick: () -> Unit
 ) {
     Surface(
-        modifier = Modifier.size(size),
+        modifier = Modifier
+            .size(size)
+            .clickable { onClick() },
         shape = RoundedCornerShape(10),
         elevation = 5.dp
     ) {
