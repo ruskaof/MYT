@@ -20,6 +20,10 @@ class PlansRepositoryImpl @Inject constructor(
         return plansDao.getAllPlansBefore(today)
     }
 
+    override fun getAllPlans(): Flow<List<PlanDbo>> {
+        return plansDao.getAllPlans()
+    }
+
     override suspend fun removePassedPlans() {
         plansDao.removePlansBefore(today)
     }

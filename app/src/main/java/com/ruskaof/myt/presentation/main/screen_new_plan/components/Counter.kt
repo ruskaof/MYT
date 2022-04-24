@@ -43,7 +43,7 @@ fun Counter(
             .size(60.dp))
 
         Text(
-            "${value.value.toString()} times",
+            "${value.value} times",
             style = TextStyle(
                 color = AppTheme.colors.primaryTextColor,
                 fontSize = 20.sp

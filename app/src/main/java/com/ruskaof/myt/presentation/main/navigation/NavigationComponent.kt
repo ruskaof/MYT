@@ -12,6 +12,8 @@ import com.ruskaof.myt.presentation.Screen
 import com.ruskaof.myt.presentation.main.screen_main.MainScreen
 import com.ruskaof.myt.presentation.main.screen_menu.MenuScreen
 import com.ruskaof.myt.presentation.main.screen_menu.screen_archieve.ArchiveScreen
+import com.ruskaof.myt.presentation.main.screen_menu.screen_settings.SettingsScreen
+import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.StatisticsScreen
 import com.ruskaof.myt.presentation.main.screen_new_plan.NewPlanScreen
 import com.ruskaof.myt.presentation.main.screen_splash.AnimatedSplashScreen
 
@@ -93,6 +95,18 @@ fun NavigationComponent(
             route = Screen.ArchiveScreen.route
         ) {
             ArchiveScreen()
+        }
+
+        composable(
+            route = Screen.SettingsScreen.route
+        ) {
+            SettingsScreen()
+        }
+
+        composable(
+            route = Screen.StatisticsScreen.route
+        ) {
+            StatisticsScreen()
         }
     }
 }

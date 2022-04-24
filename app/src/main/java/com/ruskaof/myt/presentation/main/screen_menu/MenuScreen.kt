@@ -10,6 +10,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -44,7 +45,7 @@ fun MenuScreen(
     ) {
 
         CompositionLocalProvider(
-            LocalOverScrollConfiguration provides null
+            LocalOverScrollConfiguration provides null // Disabling overscroll animation
         ) {
             Row(
                 modifier = Modifier
@@ -54,27 +55,23 @@ fun MenuScreen(
                 MenuItemCard(
                     icon = Icons.Default.Info,
                     iconColor = AppTheme.colors.secondary,
-                    onClick = { navController.navigate(Screen.ArchiveScreen.route) })
+                    onClick = { navController.navigate(Screen.ArchiveScreen.route) },
+                    label = "Archive"
+                )
 
                 MenuItemCard(
                     icon = Icons.Default.Settings,
                     iconColor = AppTheme.colors.secondary,
-                    onClick = { navController.navigate(Screen.ArchiveScreen.route) })
+                    onClick = { navController.navigate(Screen.SettingsScreen.route) },
+                    label = "Settings"
+                )
 
                 MenuItemCard(
-                    icon = Icons.Default.Settings,
+                    icon = Icons.Default.Star,
                     iconColor = AppTheme.colors.secondary,
-                    onClick = { navController.navigate(Screen.ArchiveScreen.route) })
-
-                MenuItemCard(
-                    icon = Icons.Default.Settings,
-                    iconColor = AppTheme.colors.secondary,
-                    onClick = { navController.navigate(Screen.ArchiveScreen.route) })
-
-                MenuItemCard(
-                    icon = Icons.Default.Settings,
-                    iconColor = AppTheme.colors.secondary,
-                    onClick = { navController.navigate(Screen.ArchiveScreen.route) })
+                    onClick = { navController.navigate(Screen.StatisticsScreen.route) },
+                    label = "Stats"
+                )
             }
         }
     }

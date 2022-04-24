@@ -17,6 +17,9 @@ interface PlansDao {
     @Query("SELECT * FROM plans WHERE start_time <= :todayDate ORDER BY start_time")
     fun getAllPlansBefore(todayDate: String): Flow<List<PlanDbo>>
 
+    @Query("SELECT * FROM plans")
+    fun getAllPlans(): Flow<List<PlanDbo>>
+
     @Query("DELETE FROM plans WHERE id = :id")
     suspend fun removePlan(id: Long)
 
