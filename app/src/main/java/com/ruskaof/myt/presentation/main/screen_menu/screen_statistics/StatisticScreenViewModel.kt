@@ -16,7 +16,7 @@ class StatisticScreenViewModel @Inject constructor(
         return getAllPlansBeforeTodayUseCase()
     }
 
-    fun calculateTimeMinutes(list: List<Plan>): Map<String, Long> {
+    fun calculateTimeMinutes(list: List<Plan>): List<Pair<String, Long>> {
         val map: MutableMap<String, Long> = emptyMap<String, Long>().toMutableMap()
 
         for (item in list) {
@@ -25,7 +25,7 @@ class StatisticScreenViewModel @Inject constructor(
             map[item.name] = map.getOrDefault(item.name, 0) + minutes
         }
 
-        return map.toMap()
+        return map.toList()
     }
 
 }
