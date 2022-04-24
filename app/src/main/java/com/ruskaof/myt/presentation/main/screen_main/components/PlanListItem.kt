@@ -2,9 +2,12 @@ package com.ruskaof.myt.presentation.main.screen_main.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,7 +43,9 @@ fun PlanListItem(
             .fillMaxWidth()
             .combinedClickable(
                 onClick = {},
-                onLongClick = { onLongPress() }
+                onLongClick = { onLongPress() },
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(bounded = true),
             )
     ) {
         Row(
