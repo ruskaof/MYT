@@ -1,7 +1,10 @@
 package com.ruskaof.myt.presentation.main.screen_new_plan.components
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.material.RadioButton
@@ -65,47 +68,50 @@ fun SelectPeriodButtons(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp)
         ) {
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = selectedState.value == Period.DAY,
+                    onClick = { selectedState.value = Period.DAY },
+                )
                 Text(
                     "Every day", style = TextStyle(
                         color = AppTheme.colors.primaryTextColor,
                         fontSize = 20.sp
-                    ), modifier = Modifier.weight(2f)
-                )
-                RadioButton(
-                    selected = selectedState.value == Period.DAY,
-                    onClick = { selectedState.value = Period.DAY },
-                    modifier = Modifier.weight(1f)
+                    )
                 )
             }
-            Spacer(modifier = Modifier.size(8.dp))
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = selectedState.value == Period.WEEK,
+                    onClick = { selectedState.value = Period.WEEK },
+                )
                 Text(
                     "Every week", style = TextStyle(
                         color = AppTheme.colors.primaryTextColor,
                         fontSize = 20.sp
-                    ), modifier = Modifier.weight(2f)
-                )
-                RadioButton(
-                    selected = selectedState.value == Period.WEEK,
-                    onClick = { selectedState.value = Period.WEEK },
-                    modifier = Modifier.weight(1f)
+                    )
                 )
             }
-            Spacer(modifier = Modifier.size(8.dp))
-            Row {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = selectedState.value == Period.TWO_WEEKS,
+                    onClick = { selectedState.value = Period.TWO_WEEKS },
+                )
                 Text(
                     "Every two weeks", style = TextStyle(
                         color = AppTheme.colors.primaryTextColor,
                         fontSize = 20.sp
-                    ), modifier = Modifier.weight(2f)
-                )
-                RadioButton(
-                    selected = selectedState.value == Period.TWO_WEEKS,
-                    onClick = { selectedState.value = Period.TWO_WEEKS },
-                    modifier = Modifier.weight(1f)
+                    )
                 )
             }
 

@@ -1,3 +1,5 @@
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+
 package com.ruskaof.myt.presentation.main.screen_main.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
