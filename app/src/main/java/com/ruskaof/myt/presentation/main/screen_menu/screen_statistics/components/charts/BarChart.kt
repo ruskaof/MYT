@@ -92,6 +92,18 @@ fun BarChart(
                 )
             }
         }
+
+        for (item in data) {
+            Log.d("MAIN_TAG", "BarChart: $item")
+            drawIntoCanvas {
+                it.nativeCanvas.drawText(
+                    item.second.toString(),
+                    ((item.second - minValue) / (maxValue - minValue)) * size.width + axisWidth.toPx(), // TODO: ALWAYS ZERO NEEDS FIX
+                    size.height,
+                    textPaint
+                )
+            }
+        }
     }
 }
 
