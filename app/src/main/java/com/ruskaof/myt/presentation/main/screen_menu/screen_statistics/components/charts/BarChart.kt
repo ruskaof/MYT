@@ -6,6 +6,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -22,7 +23,7 @@ import kotlin.math.roundToLong
 fun BarChart(
     data: List<Pair<String, Long>>,
     modifier: Modifier,
-    axisWidth: Dp = 2.dp
+    axisWidth: Dp = 2.dp,
 ) {
     val maxValue: Long = data.maxByOrNull { it.second }?.second?.times(1.2f)?.roundToLong() ?: 0
     val minValue: Long = data.minByOrNull { it.second }?.second?.times(0.8f)?.roundToLong() ?: 0
@@ -63,27 +64,30 @@ fun BarChart(
             strokeWidth = axisWidth.toPx()
         )
 
-        val lineWidth = size.width / data.size
+        val lineWidth = size.height / data.size
 
         for (i in data.indices) {
-
-            drawRect(
+            drawRoundRect(
                 color = Color.Red,
                 topLeft = Offset(
-                    y = size.height - size.height * (data[i].second - minValue) / (maxValue - minValue),
-                    x = i * lineWidth
+                    y = i * lineWidth + lineWidth / 6f - axisWidth.toPx(),
+                    x = axisWidth.toPx()
                 ),
                 size = Size(
-                    height = size.height * (data[i].second - minValue) / (maxValue - minValue),
-                    width = lineWidth
-                )
+                    height = lineWidth / 1.2f,
+                    width = size.width * (data[i].second - minValue) / (maxValue - minValue)
+                ),
+                cornerRadius = CornerRadius(x = 5.dp.toPx(), y = 5.dp.toPx())
             )
 
+        }
+
+        for (i in data.indices) {
             drawIntoCanvas {
                 it.nativeCanvas.drawText(
                     data[i].first,
-                    i * lineWidth,
-                    size.height,
+                    axisWidth.toPx(),
+                    (i * lineWidth + lineWidth / 1.2f),
                     textPaint
                 )
             }
@@ -98,7 +102,11 @@ fun BarChartPreview() {
         data = listOf(
             "label 1" to 10,
             "label 2" to 30,
-            "label 3" to 4
+            "label 3" to 4,
+            "fasf" to 32,
+            "fa2sf" to 32,
+            "fa1sf" to 72,
+            "fa5sf" to 332,
         ),
         modifier = Modifier.size(300.dp)
     )
