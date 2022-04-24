@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -17,11 +19,22 @@ fun BarChart(
     val minValue: Long = data.values.minByOrNull { it } ?: 0
 
     Box(modifier = modifier.drawBehind {
-
+        drawLine(
+            start = Offset(
+                x = 0f,
+                y = size.height
+            ),
+            end = Offset(
+                x = size.width,
+                y = size.height
+            ),
+            color = Color.Black,
+            strokeWidth = 2.dp.toPx()
+        )
     })
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun BarChartPreview() {
     BarChart(
@@ -30,6 +43,6 @@ fun BarChartPreview() {
             "label 2" to 30,
             "label 3" to 4
         ),
-        modifier = Modifier.size(40.dp)
+        modifier = Modifier.size(300.dp)
     )
 }

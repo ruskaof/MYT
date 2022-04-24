@@ -1,5 +1,6 @@
 package com.ruskaof.myt.presentation.main.screen_new_plan.components
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,9 +13,12 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ruskaof.myt.presentation.theme.AppTheme
@@ -23,7 +27,9 @@ import com.ruskaof.myt.presentation.theme.AppTheme
 fun PlanRepeatField(
     checked: MutableState<Boolean>,
     selectedPeriod: MutableState<Period>,
-    timesValue: MutableState<Int>
+    timesValue: MutableState<Int>,
+    primaryTextColor: Color = AppTheme.colors.primaryTextColor,
+    secondaryColor: Color = AppTheme.colors.secondary
 ) {
 
     Column(
@@ -40,7 +46,7 @@ fun PlanRepeatField(
             Text(
                 "Repeat",
                 style = TextStyle(
-                    color = AppTheme.colors.primaryTextColor,
+                    color = primaryTextColor,
                     fontSize = 30.sp
                 ),
                 modifier = Modifier.padding(end = 10.dp)
@@ -50,7 +56,12 @@ fun PlanRepeatField(
         }
 
         if (checked.value) {
-            SelectPeriodButtons(selectedState = selectedPeriod, timesValue = timesValue)
+            SelectPeriodButtons(
+                selectedState = selectedPeriod,
+                timesValue = timesValue,
+                secondaryColor = secondaryColor,
+                primaryTextColor = primaryTextColor
+            )
         }
     }
 }
@@ -58,12 +69,14 @@ fun PlanRepeatField(
 @Composable
 fun SelectPeriodButtons(
     selectedState: MutableState<Period>,
-    timesValue: MutableState<Int>
+    timesValue: MutableState<Int>,
+    secondaryColor: Color,
+    primaryTextColor: Color
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(10.dp),
-        color = AppTheme.colors.secondary
+        color = secondaryColor
     ) {
         Column(
             modifier = Modifier
@@ -79,7 +92,7 @@ fun SelectPeriodButtons(
                 )
                 Text(
                     "Every day", style = TextStyle(
-                        color = AppTheme.colors.primaryTextColor,
+                        color = primaryTextColor,
                         fontSize = 20.sp
                     )
                 )
@@ -94,7 +107,7 @@ fun SelectPeriodButtons(
                 )
                 Text(
                     "Every week", style = TextStyle(
-                        color = AppTheme.colors.primaryTextColor,
+                        color = primaryTextColor,
                         fontSize = 20.sp
                     )
                 )
@@ -109,14 +122,27 @@ fun SelectPeriodButtons(
                 )
                 Text(
                     "Every two weeks", style = TextStyle(
-                        color = AppTheme.colors.primaryTextColor,
+                        color = primaryTextColor,
                         fontSize = 20.sp
                     )
                 )
             }
 
-            Counter(value = timesValue, max = 100, min = 2)
+            Counter(value = timesValue, max = 100, min = 2, primaryTextColor = primaryTextColor)
         }
     }
+}
+
+@SuppressLint("UnrememberedMutableState")
+@Preview
+@Composable
+fun PlanRepeatFieldPreview() {
+    PlanRepeatField(
+        checked = mutableStateOf(true),
+        selectedPeriod = mutableStateOf(Period.WEEK),
+        timesValue = mutableStateOf(5),
+        primaryTextColor = Color.Black,
+        secondaryColor = Color(0xFFB3E5FC),
+    )
 }
 

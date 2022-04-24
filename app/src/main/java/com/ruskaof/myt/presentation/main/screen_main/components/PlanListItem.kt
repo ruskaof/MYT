@@ -15,12 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ruskaof.myt.common.niceTime
 import com.ruskaof.myt.domain.model.Plan
 import com.ruskaof.myt.presentation.theme.AppTheme
+import java.time.LocalDateTime
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -37,8 +39,9 @@ fun PlanListItem(
         fontWeight = FontWeight.Light
     ),
     planNameTextStyle: TextStyle = TextStyle(color = Color.White),
-    paddingStart: Dp,
-    onLongPress: () -> Unit = {}
+    bigPaddingStart: Dp = AppTheme.shapes.bigPaddingFromStart,
+    onLongPress: () -> Unit = {},
+    primaryColor: Color = AppTheme.colors.primary
 ) {
     Box(
         modifier = Modifier
@@ -56,7 +59,7 @@ fun PlanListItem(
         ) {
             Column(
                 modifier = Modifier
-                    .padding(start = paddingStart, end = 5.dp),
+                    .padding(start = bigPaddingStart, end = 5.dp),
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -66,12 +69,22 @@ fun PlanListItem(
             Box {
                 TextInOval(
                     text = plan.name,
-                    ovalColor = AppTheme.colors.primary,
+                    ovalColor = primaryColor,
                     style = planNameTextStyle
                 )
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PlanListItemPreview() {
+    PlanListItem(
+        plan = Plan("Name of plan", LocalDateTime.MIN, LocalDateTime.MAX),
+        bigPaddingStart = 40.dp,
+        primaryColor = Color(0xFF00897B)
+    )
 }
 
 

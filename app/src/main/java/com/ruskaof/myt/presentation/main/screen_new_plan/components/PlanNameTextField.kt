@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -23,9 +24,7 @@ fun PlanNameTextField(
     backgroundColor: Color,
     clearText: () -> Unit
 ) {
-    Column(
-
-    ) {
+    Column {
         Text(
             text = caption,
             modifier = Modifier
@@ -68,5 +67,20 @@ fun PlanNameTextField(
             textAlign = TextAlign.End,
             color = labelsColor
         )
+    }
+}
+
+@Preview
+@Composable
+fun PlanNameTextFieldPreview() {
+    PlanNameTextField(
+        caption = "Caption",
+        maxLength = 30,
+        textState = "text",
+        onValueChange = {},
+        labelsColor = Color(0xFFB3E5FC),
+        backgroundColor = Color(0xFFB3E5FC)
+    ) {
+
     }
 }

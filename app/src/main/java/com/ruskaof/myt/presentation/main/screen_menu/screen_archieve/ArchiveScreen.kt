@@ -66,7 +66,7 @@ fun ArchiveScreen(
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Center
                     ),
-                    paddingStart = AppTheme.shapes.bigPaddingFromStart
+                    bigPaddingStart = AppTheme.shapes.bigPaddingFromStart
                 )
             }
         }

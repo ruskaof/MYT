@@ -14,10 +14,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ruskaof.myt.common.Constants
@@ -117,11 +114,7 @@ fun NewPlanScreen(
 
             DatePickerField(
                 context = context,
-                textStyle = TextStyle(
-                    color = AppTheme.colors.primaryTextColor,
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Light
-                ),
+
                 label = "Date",
                 setDate = { year, month, day ->
                     viewModel.setStartDate(year, month, day)
@@ -135,11 +128,6 @@ fun NewPlanScreen(
 
             TimePickerField(
                 context = context,
-                textStyle = TextStyle(
-                    color = AppTheme.colors.primaryTextColor,
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Light
-                ),
                 label = "Start",
                 setTime = { hour, minute -> viewModel.setStartTime(hour, minute) },
                 //setDate = { year, month, day -> viewModel.setStartDate(year, month, day) },
@@ -153,11 +141,6 @@ fun NewPlanScreen(
 
             TimePickerField(
                 context = context,
-                textStyle = TextStyle(
-                    color = AppTheme.colors.primaryTextColor,
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Light,
-                ),
                 label = "End",
                 setTime = { hour, minute -> viewModel.setEndTime(hour, minute) },
                 //setDate = { year, month, day -> viewModel.setEndDate(year, month, day) },

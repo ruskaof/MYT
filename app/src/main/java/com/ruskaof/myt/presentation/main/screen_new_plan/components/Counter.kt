@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,7 +29,8 @@ import com.ruskaof.myt.presentation.theme.AppTheme
 fun Counter(
     value: MutableState<Int>,
     max: Int,
-    min: Int
+    min: Int,
+    primaryTextColor: Color = AppTheme.colors.primary
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -45,7 +47,7 @@ fun Counter(
         Text(
             "${value.value} times",
             style = TextStyle(
-                color = AppTheme.colors.primaryTextColor,
+                color = primaryTextColor,
                 fontSize = 20.sp
             )
         )
@@ -64,5 +66,10 @@ fun Counter(
 @Composable
 @Preview
 fun CounterPreview() {
-    Counter(value = mutableStateOf(1), max = Int.MAX_VALUE, min = Int.MIN_VALUE)
+    Counter(
+        value = mutableStateOf(3),
+        max = Int.MAX_VALUE,
+        min = Int.MIN_VALUE,
+        primaryTextColor = Color.Black
+    )
 }

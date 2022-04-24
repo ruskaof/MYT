@@ -1,3 +1,5 @@
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+
 package com.ruskaof.myt.presentation.main.screen_main
 
 import android.util.Log
@@ -37,8 +39,6 @@ fun MainScreen(
     viewModel: MainScreenViewModel = hiltViewModel(),
     navController: NavController,
 ) {
-    Log.d("testingtag", "MainScreen: ${navController.backQueue}")
-
     val listState: List<Plan> by viewModel.getAllPlans().collectAsState(initial = emptyList())
     val dialogIsOpen = remember { mutableStateOf(false) }
     val selectedPlanId = remember {
@@ -114,7 +114,7 @@ fun MainScreen(
                             fontWeight = FontWeight.SemiBold,
                             textAlign = TextAlign.Center
                         ),
-                        paddingStart = AppTheme.shapes.bigPaddingFromStart
+                        bigPaddingStart = AppTheme.shapes.bigPaddingFromStart
                     )
 
                 }

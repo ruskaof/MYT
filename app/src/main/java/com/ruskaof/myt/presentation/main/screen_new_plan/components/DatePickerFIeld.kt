@@ -14,18 +14,23 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
+import com.ruskaof.myt.presentation.theme.AppTheme
 import java.time.LocalDateTime
 
 @Composable
 fun DatePickerField(
     context: Context,
-    textStyle: TextStyle,
     label: String,
     setDate: (year: Int, month: Int, day: Int) -> Unit,
     time: LocalDateTime,
-    timeSurfaceColor: Color
+    timeSurfaceColor: Color,
+    primaryTextColor: Color = AppTheme.colors.primaryTextColor
 ) {
     val selectedDate =
         "${time.dayOfMonth}/${time.monthValue}/${time.year}"
@@ -41,7 +46,11 @@ fun DatePickerField(
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = label,
-            style = textStyle,
+            style = TextStyle(
+                color = primaryTextColor,
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Light
+            ),
             modifier = Modifier.weight(2f),
             textAlign = TextAlign.Center
         )
@@ -52,7 +61,11 @@ fun DatePickerField(
             shape = RoundedCornerShape(30)
         ) {
             Column(modifier = Modifier.weight(4f)) {
-                Text(text = selectedDate, style = textStyle, modifier = Modifier
+                Text(text = selectedDate, style = TextStyle(
+                    color = primaryTextColor,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Light
+                ), modifier = Modifier
                     .clickable {
                         datePickerDialog.show()
                     }
@@ -62,4 +75,17 @@ fun DatePickerField(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DatePickerFieldPreview() {
+    DatePickerField(
+        context = LocalContext.current,
+        label = "Label",
+        setDate = { _, _, _ -> },
+        time = LocalDateTime.now(),
+        timeSurfaceColor = Color(0xFFB3E5FC),
+        primaryTextColor = Color.Black
+    )
 }
