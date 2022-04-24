@@ -20,7 +20,7 @@ interface PlansDao {
     @Query("DELETE FROM plans WHERE id = :id")
     suspend fun removePlan(id: Long)
 
-    @Query("SELECT * FROM plans WHERE start_time <= :todayDate")
+    @Query("DELETE FROM plans WHERE start_time <= :todayDate")
     suspend fun removePlansBefore(todayDate: String)
 
     @Insert(entity = PlanDbo::class)

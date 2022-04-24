@@ -1,12 +1,17 @@
 package com.ruskaof.myt.presentation.main.screen_menu
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -16,6 +21,7 @@ import com.ruskaof.myt.presentation.main.screen_menu.components.MenuItemCard
 import com.ruskaof.myt.presentation.main.screen_new_plan.components.TopBar
 import com.ruskaof.myt.presentation.theme.AppTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MenuScreen(
     viewModel: MenuScreenViewModel = hiltViewModel(),
@@ -36,15 +42,40 @@ fun MenuScreen(
             )
         }
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = AppTheme.shapes.defaultPaddingFromStart)
+
+        CompositionLocalProvider(
+            LocalOverScrollConfiguration provides null
         ) {
-            MenuItemCard(
-                icon = Icons.Default.Info,
-                iconColor = AppTheme.colors.secondary,
-                onClick = { navController.navigate(Screen.ArchiveScreen.route) })
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
+            ) {
+                MenuItemCard(
+                    icon = Icons.Default.Info,
+                    iconColor = AppTheme.colors.secondary,
+                    onClick = { navController.navigate(Screen.ArchiveScreen.route) })
+
+                MenuItemCard(
+                    icon = Icons.Default.Settings,
+                    iconColor = AppTheme.colors.secondary,
+                    onClick = { navController.navigate(Screen.ArchiveScreen.route) })
+
+                MenuItemCard(
+                    icon = Icons.Default.Settings,
+                    iconColor = AppTheme.colors.secondary,
+                    onClick = { navController.navigate(Screen.ArchiveScreen.route) })
+
+                MenuItemCard(
+                    icon = Icons.Default.Settings,
+                    iconColor = AppTheme.colors.secondary,
+                    onClick = { navController.navigate(Screen.ArchiveScreen.route) })
+
+                MenuItemCard(
+                    icon = Icons.Default.Settings,
+                    iconColor = AppTheme.colors.secondary,
+                    onClick = { navController.navigate(Screen.ArchiveScreen.route) })
+            }
         }
     }
 }
