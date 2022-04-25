@@ -28,7 +28,11 @@ fun BarChart(
     val maxValue: Long = data.maxByOrNull { it.second }?.second?.times(1.2f)?.roundToLong() ?: 0
     val minValue: Long = data.minByOrNull { it.second }?.second?.times(0.8f)?.roundToLong() ?: 0
 
-    Log.d("MAIN_TAG", "BarChart: $data")
+
+    val normalisedData =
+        data.map { it.first to ((it.second - minValue) / (maxValue - minValue).toDouble()) }
+
+    Log.d("MAIN_TAG", "BarChart: $normalisedData")
 
     Canvas(modifier = modifier) {
         val textPaint = Paint().asFrameworkPaint().apply {
@@ -64,9 +68,9 @@ fun BarChart(
             strokeWidth = axisWidth.toPx()
         )
 
-        val lineWidth = size.height / data.size
+        val lineWidth = size.height / normalisedData.size
 
-        for (i in data.indices) {
+        for (i in normalisedData.indices) {
             drawRoundRect(
                 color = Color.Red,
                 topLeft = Offset(
@@ -75,17 +79,18 @@ fun BarChart(
                 ),
                 size = Size(
                     height = lineWidth / 1.2f,
-                    width = size.width * (data[i].second - minValue) / (maxValue - minValue)
+                    width = size.width * normalisedData[i].second.toFloat()
                 ),
                 cornerRadius = CornerRadius(x = 5.dp.toPx(), y = 5.dp.toPx())
             )
 
         }
 
-        for (i in data.indices) {
+        // Vertical labels
+        for (i in normalisedData.indices) {
             drawIntoCanvas {
                 it.nativeCanvas.drawText(
-                    data[i].first,
+                    normalisedData[i].first,
                     axisWidth.toPx(),
                     (i * lineWidth + lineWidth / 1.2f),
                     textPaint
@@ -93,13 +98,13 @@ fun BarChart(
             }
         }
 
-        for (item in data) {
-            Log.d("MAIN_TAG", "BarChart: $item")
+        // Horizontal numbers
+        for (i in normalisedData.indices) {
             drawIntoCanvas {
                 it.nativeCanvas.drawText(
-                    item.second.toString(),
-                    ((item.second - minValue) / (maxValue - minValue)) * size.width + axisWidth.toPx(), // TODO: ALWAYS ZERO NEEDS FIX
-                    size.height,
+                    data[i].second.toString(),
+                    normalisedData[i].second.toFloat() * size.width + axisWidth.toPx(),
+                    size.height - axisWidth.toPx(),
                     textPaint
                 )
             }
