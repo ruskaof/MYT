@@ -43,7 +43,7 @@ fun BottomNavigationBar(
                         // Pop up to the start destination of the graph to
                         // avoid building up a large stack of destinations
                         // on the back stack as users select items
-                        popUpTo(it.route)
+                        popUpTo(it.route) // TODO: understand how it works and fix a bug
                         // Avoid multiple copies of the same destination when
                         // reselecting the same item
                         launchSingleTop = true

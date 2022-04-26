@@ -57,31 +57,32 @@ fun BarChart(
             typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
         }
 
-        drawLine(
-            start = Offset(
-                x = 0f,
-                y = size.height
-            ),
-            end = Offset(
-                x = size.width,
-                y = size.height
-            ),
-            color = Color.Black,
-            strokeWidth = axisWidth.toPx()
-        )
-
-        drawLine(
-            start = Offset(
-                x = 0f,
-                y = size.height
-            ),
-            end = Offset(
-                x = 0f,
-                y = 0f
-            ),
-            color = Color.Black,
-            strokeWidth = axisWidth.toPx()
-        )
+        // Axis
+//        drawLine(
+//            start = Offset(
+//                x = 0f,
+//                y = size.height
+//            ),
+//            end = Offset(
+//                x = size.width,
+//                y = size.height
+//            ),
+//            color = Color.Black,
+//            strokeWidth = axisWidth.toPx()
+//        )
+//
+//        drawLine(
+//            start = Offset(
+//                x = 0f,
+//                y = size.height
+//            ),
+//            end = Offset(
+//                x = 0f,
+//                y = 0f
+//            ),
+//            color = Color.Black,
+//            strokeWidth = axisWidth.toPx()
+//        )
 
         val lineWidth = size.height / normalisedData.size
 
@@ -89,8 +90,8 @@ fun BarChart(
             drawRoundRect(
                 color = barsColor,
                 topLeft = Offset(
-                    y = i * lineWidth + lineWidth / 6f - axisWidth.toPx(),
-                    x = axisWidth.toPx()
+                    y = i * lineWidth + lineWidth / 6f, // - axisWidth.toPx(),
+                    x = 0f, //axisWidth.toPx()
                 ),
                 size = Size(
                     height = lineWidth / 1.2f,
@@ -106,7 +107,7 @@ fun BarChart(
             drawIntoCanvas {
                 it.nativeCanvas.drawText(
                     "${normalisedData[i].first}, ${data[i].second} min",
-                    axisWidth.toPx(),
+                    0f, //axisWidth.toPx(),
                     (i * lineWidth + lineWidth / 1.2f),
                     textPaint
                 )

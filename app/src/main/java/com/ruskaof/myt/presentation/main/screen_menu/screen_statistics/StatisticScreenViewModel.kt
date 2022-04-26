@@ -25,7 +25,8 @@ class StatisticScreenViewModel @Inject constructor(
             map[item.name] = map.getOrDefault(item.name, 0) + minutes
         }
 
-        return map.toList()
+        return map.toSortedMap { it, that -> (-map[it]!! + map[that]!!).toInt() }
+            .map { it.key to it.value }
     }
 
 }
