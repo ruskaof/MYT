@@ -13,10 +13,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.alpha
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
+import androidx.core.graphics.red
+import com.ruskaof.myt.presentation.theme.AppTheme
 import kotlin.math.roundToLong
 
 @Composable
@@ -24,6 +30,8 @@ fun BarChart(
     data: List<Pair<String, Long>>,
     modifier: Modifier,
     axisWidth: Dp = 2.dp,
+    perceptibleColoredTextColor: Color = AppTheme.colors.perceptibleColoredTextColor,
+    barsColor: Color
 ) {
     val maxValue: Long = data.maxByOrNull { it.second }?.second?.times(1.2f)?.roundToLong() ?: 0
     val minValue: Long = data.minByOrNull { it.second }?.second?.times(0.8f)?.roundToLong() ?: 0
@@ -38,7 +46,14 @@ fun BarChart(
         val textPaint = Paint().asFrameworkPaint().apply {
             isAntiAlias = true
             textSize = 20.sp.toPx()
-            color = android.graphics.Color.BLUE
+
+            // Converting compose color to android color int
+            color = android.graphics.Color.argb(
+                perceptibleColoredTextColor.toArgb().alpha,
+                perceptibleColoredTextColor.toArgb().red,
+                perceptibleColoredTextColor.toArgb().green,
+                perceptibleColoredTextColor.toArgb().blue
+            )
             typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
         }
 
@@ -72,7 +87,7 @@ fun BarChart(
 
         for (i in normalisedData.indices) {
             drawRoundRect(
-                color = Color.Red,
+                color = barsColor,
                 topLeft = Offset(
                     y = i * lineWidth + lineWidth / 6f - axisWidth.toPx(),
                     x = axisWidth.toPx()
@@ -90,7 +105,7 @@ fun BarChart(
         for (i in normalisedData.indices) {
             drawIntoCanvas {
                 it.nativeCanvas.drawText(
-                    normalisedData[i].first,
+                    "${normalisedData[i].first}, ${data[i].second} min",
                     axisWidth.toPx(),
                     (i * lineWidth + lineWidth / 1.2f),
                     textPaint
@@ -99,16 +114,16 @@ fun BarChart(
         }
 
         // Horizontal numbers
-        for (i in normalisedData.indices) {
-            drawIntoCanvas {
-                it.nativeCanvas.drawText(
-                    data[i].second.toString(),
-                    normalisedData[i].second.toFloat() * size.width + axisWidth.toPx(),
-                    size.height - axisWidth.toPx(),
-                    textPaint
-                )
-            }
-        }
+//        for (i in normalisedData.indices) {
+//            drawIntoCanvas {
+//                it.nativeCanvas.drawText(
+//                    data[i].second.toString(),
+//                    normalisedData[i].second.toFloat() * size.width + axisWidth.toPx(),
+//                    size.height - axisWidth.toPx(),
+//                    textPaint
+//                )
+//            }
+//        }
     }
 }
 
@@ -125,6 +140,8 @@ fun BarChartPreview() {
             "fa1sf" to 72,
             "fa5sf" to 332,
         ),
-        modifier = Modifier.size(300.dp)
+        modifier = Modifier.size(300.dp),
+        perceptibleColoredTextColor = Color(0xFFAB47BC),
+        barsColor = Color(0xFFB3E5FC)
     )
 }
