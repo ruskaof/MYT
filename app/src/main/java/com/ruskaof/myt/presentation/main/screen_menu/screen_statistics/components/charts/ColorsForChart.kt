@@ -1,0 +1,16 @@
+package com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.components.charts
+
+import androidx.compose.ui.graphics.Color
+
+val colorCollection: Collection<Color> = setOf(
+    Color(0xFF9C1B1B),
+    Color(0xFF5E35B1),
+    Color(0xFF00ACC1),
+    Color(0xFFF4511E),
+    Color(0xFF3949AB),
+    Color(0xFFE53935),
+    Color(0xFF00897B),
+    Color(0xFFC0CA33),
+    Color(0xFF8E24AA),
+    Color(0xFFD81B60),
+)

@@ -2,9 +2,11 @@ package com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.componen
 
 import android.graphics.Typeface
 import android.util.Log
+import androidx.compose.animation.core.FloatTweenSpec
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -15,7 +17,6 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.alpha
@@ -29,18 +30,36 @@ import kotlin.math.roundToLong
 fun BarChart(
     data: List<Pair<String, Long>>,
     modifier: Modifier,
-    axisWidth: Dp = 2.dp,
     perceptibleColoredTextColor: Color = AppTheme.colors.perceptibleColoredTextColor,
-    barsColor: Color
+    barsColor: Color,
 ) {
-    val maxValue: Long = data.maxByOrNull { it.second }?.second?.times(1.2f)?.roundToLong() ?: 0
-    val minValue: Long = data.minByOrNull { it.second }?.second?.times(0.8f)?.roundToLong() ?: 0
+    val maxValue by remember {
+        mutableStateOf(
+            data.maxByOrNull { it.second }?.second?.times(1.2f)?.roundToLong() ?: 0
+        )
+    }
+    val minValue by remember {
+        mutableStateOf(
+            data.minByOrNull { it.second }?.second?.times(0.8f)?.roundToLong() ?: 0
+        )
+    }
 
+    var barChartsAreShown by remember { mutableStateOf(false) }
 
-    val normalisedData =
-        data.map { it.first to ((it.second - minValue) / (maxValue - minValue).toDouble()) }
+    val normalisedData by remember {
+        mutableStateOf(
+            data.map { it.first to ((it.second - minValue) / (maxValue - minValue).toDouble()) }
+        )
+    }
 
-    Log.d("MAIN_TAG", "BarChart: $normalisedData")
+    val animatedBarWidthPre by animateFloatAsState(
+        targetValue = if (barChartsAreShown) 1f else 0f,
+        animationSpec = FloatTweenSpec(duration = 1000)
+    )
+    LaunchedEffect(key1 = true) {
+        barChartsAreShown = true
+        Log.d("MAIN_TAG", "StatisticsScreen: bars are now shown")
+    }
 
     Canvas(modifier = modifier) {
         val textPaint = Paint().asFrameworkPaint().apply {
@@ -95,7 +114,7 @@ fun BarChart(
                 ),
                 size = Size(
                     height = lineWidth / 1.2f,
-                    width = size.width * normalisedData[i].second.toFloat()
+                    width = (size.width * normalisedData[i].second.toFloat()) * animatedBarWidthPre
                 ),
                 cornerRadius = CornerRadius(x = 5.dp.toPx(), y = 5.dp.toPx())
             )
@@ -136,7 +155,7 @@ fun BarChartPreview() {
             "label 1" to 10,
             "label 2" to 30,
             "label 3" to 4,
-            "fasf" to 32,
+            "asf" to 32,
             "fa2sf" to 32,
             "fa1sf" to 72,
             "fa5sf" to 332,
