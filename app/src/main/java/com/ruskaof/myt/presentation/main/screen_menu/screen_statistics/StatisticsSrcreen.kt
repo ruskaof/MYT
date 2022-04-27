@@ -25,7 +25,6 @@ import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.component
 import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.components.charts.colorCollection
 import com.ruskaof.myt.presentation.main.screen_new_plan.components.TopBar
 import com.ruskaof.myt.presentation.theme.AppTheme
-import kotlin.math.min
 
 @Composable
 fun StatisticsScreen(
@@ -37,7 +36,7 @@ fun StatisticsScreen(
         if (beforeTodayListState.isEmpty()) emptyList() else viewModel.calculateTimeMinutes(
             beforeTodayListState
         )
-            .subList(0, min(5, beforeTodayListState.size))
+            .take(5)
 
     Log.d("MAIN_TAG", "StatisticsScreen: $beforeTodayListState")
     Log.d("MAIN_TAG", "StatisticsScreen: $barStats")

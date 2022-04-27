@@ -21,14 +21,14 @@ fun PieChart(
         PieChartItem("banana", 5, Color.Yellow),
         PieChartItem("pie", 7, Color.Cyan)
     ),
-    //size: Dp = 200.dp,
+    isAlreadyShown: Boolean = false
 ) {
-    var pieChartIsShown by remember { mutableStateOf(false) }
+    var pieChartIsShown by remember { mutableStateOf(isAlreadyShown) }
 
 
     val animatedPieWidthPre by animateFloatAsState(
         targetValue = if (pieChartIsShown) 1f else 0f,
-        animationSpec = FloatTweenSpec(duration = 1000)
+        animationSpec = FloatTweenSpec(duration = 1500)
     )
     LaunchedEffect(key1 = true) {
         pieChartIsShown = true
@@ -72,6 +72,7 @@ fun PieChart(
                     startAngle = startAngle,
                     sweepAngle = sweepAngles[i],
                     useCenter = true,
+
                 )
                 startAngle += sweepAngles[i]
             }
@@ -109,5 +110,5 @@ fun DisplayLegend(color: Color, legend: String) {
 @Preview
 @Composable
 fun PieChartPreview() {
-    PieChart()
+    PieChart(isAlreadyShown = true)
 }

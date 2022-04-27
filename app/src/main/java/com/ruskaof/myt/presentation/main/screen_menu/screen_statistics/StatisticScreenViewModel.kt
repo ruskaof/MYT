@@ -24,17 +24,19 @@ class StatisticScreenViewModel @Inject constructor(
     }
 
     fun calculateTimeMinutes(list: List<Plan>): List<Pair<String, Long>> {
-        val map: MutableMap<String, Long> = emptyMap<String, Long>().toMutableMap()
-
-        for (item in list) {
-            val minutes = ChronoUnit.MINUTES.between(item.startTime, item.endTime)
-
-            map[item.name] = map.getOrDefault(item.name, 0) + minutes
-        }
-
-
-        return map
-            .map { it.key to it.value }.sortedWith { it, that -> (it.second - that.second).toInt() }
+        return list.groupByNameAndSum().map { it.key to it.value }
+            .sortedWith { it, that -> (that.second - it.second).toInt() }
     }
 
+}
+
+private fun List<Plan>.groupByNameAndSum(): HashMap<String, Long> {
+    val hm = hashMapOf<String, Long>()
+
+    for (item in this) {
+        hm[item.name] =
+            hm.getOrDefault(item.name, 0) + ChronoUnit.MINUTES.between(item.startTime, item.endTime)
+    }
+
+    return hm
 }

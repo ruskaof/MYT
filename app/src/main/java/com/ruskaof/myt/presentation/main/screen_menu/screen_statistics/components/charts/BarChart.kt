@@ -32,6 +32,7 @@ fun BarChart(
     modifier: Modifier,
     perceptibleColoredTextColor: Color = AppTheme.colors.perceptibleColoredTextColor,
     barsColor: Color,
+    isAlreadyShown: Boolean = false
 ) {
     val maxValue by remember {
         mutableStateOf(
@@ -44,7 +45,7 @@ fun BarChart(
         )
     }
 
-    var barChartsAreShown by remember { mutableStateOf(false) }
+    var barChartsAreShown by remember { mutableStateOf(isAlreadyShown) }
 
     val normalisedData by remember {
         mutableStateOf(
@@ -54,7 +55,7 @@ fun BarChart(
 
     val animatedBarWidthPre by animateFloatAsState(
         targetValue = if (barChartsAreShown) 1f else 0f,
-        animationSpec = FloatTweenSpec(duration = 1000)
+        animationSpec = FloatTweenSpec(duration = 1500)
     )
     LaunchedEffect(key1 = true) {
         barChartsAreShown = true
@@ -162,6 +163,7 @@ fun BarChartPreview() {
         ),
         modifier = Modifier.size(300.dp),
         perceptibleColoredTextColor = Color(0xFFAB47BC),
-        barsColor = Color(0xFFB3E5FC)
+        barsColor = Color(0xFFB3E5FC),
+        isAlreadyShown = true
     )
 }
