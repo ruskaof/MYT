@@ -1,28 +1,38 @@
 package com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.components.charts
 
+import androidx.compose.animation.core.FloatTweenSpec
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PieChart1(
+fun PieChart(
+    modifier: Modifier = Modifier.size(300.dp),
     items: List<PieChartItem> = listOf(
         PieChartItem("mango", 10, Color.Black),
         PieChartItem("banana", 5, Color.Yellow),
         PieChartItem("pie", 7, Color.Cyan)
     ),
-    size: Dp = 200.dp
+    //size: Dp = 200.dp,
 ) {
+    var pieChartIsShown by remember { mutableStateOf(false) }
+
+
+    val animatedPieWidthPre by animateFloatAsState(
+        targetValue = if (pieChartIsShown) 1f else 0f,
+        animationSpec = FloatTweenSpec(duration = 1000)
+    )
+    LaunchedEffect(key1 = true) {
+        pieChartIsShown = true
+    }
 
     // Sum of all the values
     val sumOfValues by remember {
@@ -39,45 +49,43 @@ fun PieChart1(
 
     // Calculate each proportion value
     val proportions = items.map {
-        it.value * 100 / sumOfValues.toFloat()
+        it.value * 100 / sumOfValues
     }
 
     // Convert each proportions to angle
     val sweepAngles = proportions.map {
-        360 * it / 100
+        360 * animatedPieWidthPre * it / 100
     }
 
-    Canvas(
-        modifier = Modifier
-            .size(size = size)
-    ) {
 
-        var startAngle = -90f
-
-        for (i in sweepAngles.indices) {
-            drawArc(
-                color = items[i].color,
-                startAngle = startAngle,
-                sweepAngle = sweepAngles[i],
-                useCenter = true
-            )
-            startAngle += sweepAngles[i]
-        }
-
-    }
-
-    Spacer(modifier = Modifier.height(32.dp))
 
     Column {
+        Canvas(
+            modifier = modifier
+        ) {
+
+            var startAngle = -90f * animatedPieWidthPre
+
+            for (i in sweepAngles.indices) {
+                drawArc(
+                    color = items[i].color,
+                    startAngle = startAngle,
+                    sweepAngle = sweepAngles[i],
+                    useCenter = true,
+                )
+                startAngle += sweepAngles[i]
+            }
+
+        }
         for (i in items.indices) {
-            DisplayLegend1(color = items[i].color, legend = items[i].name)
+            DisplayLegend(color = items[i].color, legend = items[i].name)
         }
     }
 
 }
 
 @Composable
-fun DisplayLegend1(color: Color, legend: String) {
+fun DisplayLegend(color: Color, legend: String) {
 
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -96,4 +104,10 @@ fun DisplayLegend1(color: Color, legend: String) {
             color = Color.Black
         )
     }
+}
+
+@Preview
+@Composable
+fun PieChartPreview() {
+    PieChart()
 }

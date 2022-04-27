@@ -1,7 +1,9 @@
 package com.ruskaof.myt.presentation.main.screen_menu.screen_statistics
 
-import androidx.compose.foundation.background
+import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -10,7 +12,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -18,11 +20,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ruskaof.myt.domain.model.Plan
 import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.components.charts.BarChart
-import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.components.charts.PieChart1
+import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.components.charts.PieChart
 import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.components.charts.PieChartItem
 import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.components.charts.colorCollection
 import com.ruskaof.myt.presentation.main.screen_new_plan.components.TopBar
 import com.ruskaof.myt.presentation.theme.AppTheme
+import kotlin.math.min
 
 @Composable
 fun StatisticsScreen(
@@ -34,11 +37,14 @@ fun StatisticsScreen(
         if (beforeTodayListState.isEmpty()) emptyList() else viewModel.calculateTimeMinutes(
             beforeTodayListState
         )
-            .subList(0, kotlin.math.min(5, beforeTodayListState.size))
+            .subList(0, min(5, beforeTodayListState.size))
 
-    val allListState: List<Plan> by viewModel.getAllPlansBeforeToday()
-        .collectAsState(initial = emptyList())
-    val pieStats = viewModel.calculateTimeMinutes(allListState)
+    Log.d("MAIN_TAG", "StatisticsScreen: $beforeTodayListState")
+    Log.d("MAIN_TAG", "StatisticsScreen: $barStats")
+
+//    val allListState: List<Plan> by viewModel.getAllPlans()
+//        .collectAsState(initial = emptyList())
+    val pieStats = viewModel.calculateTimeMinutes(beforeTodayListState)
     val pieChartItems by derivedStateOf {
         run {
             val list = mutableListOf<PieChartItem>()
@@ -69,7 +75,9 @@ fun StatisticsScreen(
             }
         } else {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState()),
             ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
@@ -83,20 +91,20 @@ fun StatisticsScreen(
                     data = barStats,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(300.dp)
-                        .background(Color.Red),
+                        .height(300.dp),
                     barsColor = AppTheme.colors.secondary,
                 )
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Overall stats by name:", style = TextStyle(
+                    text = "Overall stats", style = TextStyle(
                         color = AppTheme.colors.primaryTextColor,
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center
                     )
                 )
-                PieChart1(
-                    items = pieChartItems
+                PieChart(
+                    items = pieChartItems,
+                    modifier = Modifier.size(LocalConfiguration.current.screenWidthDp.dp)
                 )
             }
         }

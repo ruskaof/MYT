@@ -20,7 +20,7 @@ class StatisticScreenViewModel @Inject constructor(
     }
 
     fun getAllPlans(): Flow<List<Plan>> {
-        return getAllPlansUseCase()
+        return getAllPlans()
     }
 
     fun calculateTimeMinutes(list: List<Plan>): List<Pair<String, Long>> {
@@ -32,8 +32,9 @@ class StatisticScreenViewModel @Inject constructor(
             map[item.name] = map.getOrDefault(item.name, 0) + minutes
         }
 
-        return map.toSortedMap { it, that -> (-map[it]!! + map[that]!!).toInt() }
-            .map { it.key to it.value }
+
+        return map
+            .map { it.key to it.value }.sortedWith { it, that -> (it.second - that.second).toInt() }
     }
 
 }
