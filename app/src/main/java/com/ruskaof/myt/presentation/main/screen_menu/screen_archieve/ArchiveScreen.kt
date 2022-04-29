@@ -1,5 +1,7 @@
 package com.ruskaof.myt.presentation.main.screen_menu.screen_archieve
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -23,14 +25,15 @@ import java.time.LocalDateTime
 
 @Composable
 fun ArchiveScreen(
-    viewModel: ArchiveScreenViewModel = hiltViewModel()
+    viewModel: ArchiveScreenViewModel = hiltViewModel(),
+    context: Context
 ) {
     val listState: List<Plan> by viewModel.getAllPlans().collectAsState(initial = emptyList())
     val dialogIsOpen = remember { mutableStateOf(false) }
     val selectedPlan = remember {
         mutableStateOf(Plan("error", LocalDateTime.MIN, LocalDateTime.MAX))
     }
-    var newNameOfPlanState = remember {
+    val newNameOfPlanState = remember {
         mutableStateOf("")
     }
 
@@ -44,7 +47,16 @@ fun ArchiveScreen(
     ) {
         if (dialogIsOpen.value) {
             RedactionPlanDialog(openDialogCustom = dialogIsOpen, onOk = {
-                viewModel.updatePlan(selectedPlan.value.copy(name = newNameOfPlanState.value))
+                if (newNameOfPlanState.value.isNotEmpty()) {
+                    viewModel.updatePlan(selectedPlan.value.copy(name = newNameOfPlanState.value))
+                    newNameOfPlanState.value = ""
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Name of plan must not be empty",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }, onCancel = {}, "Write a new plan name", newNameOfPlanState)
         }
 

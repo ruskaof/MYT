@@ -1,6 +1,7 @@
 package com.ruskaof.myt.presentation.main.screen_main.components
 
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,16 +23,17 @@ fun TextInOval(
     Surface(
         modifier = Modifier
             .background(Color.Transparent)
+            .animateContentSize()
             .padding(5.dp),
         shape = RoundedCornerShape(50),
         color = ovalColor,
-        elevation = 5.dp
+        elevation = 2.dp
     ) {
         Text(text, modifier = Modifier.padding(10.dp), style = style)
     }
 }
 
-@Preview (showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun TextInOvalPreview() {
     TextInOval()

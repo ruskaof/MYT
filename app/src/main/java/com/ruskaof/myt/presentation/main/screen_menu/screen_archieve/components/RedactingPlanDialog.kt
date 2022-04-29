@@ -100,7 +100,10 @@ fun RedactionPlanDialog(
     text: String,
     textFieldState: MutableState<String>
 ) {
-    Dialog(onDismissRequest = { openDialogCustom.value = false }) {
+    Dialog(onDismissRequest = {
+        openDialogCustom.value = false
+        textFieldState.value = ""
+    }) {
         RedactingPlanDialogUI(
             dialogIsOpen = openDialogCustom,
             onOk = onOk,

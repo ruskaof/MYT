@@ -94,7 +94,7 @@ fun NavigationComponent(
         composable(
             route = Screen.ArchiveScreen.route
         ) {
-            ArchiveScreen()
+            ArchiveScreen(context = context)
         }
 
         composable(
