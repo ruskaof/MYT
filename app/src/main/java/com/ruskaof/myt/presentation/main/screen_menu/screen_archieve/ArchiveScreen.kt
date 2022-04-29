@@ -6,9 +6,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -18,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ruskaof.myt.domain.model.Plan
 import com.ruskaof.myt.presentation.main.screen_main.components.NewDayHeader
 import com.ruskaof.myt.presentation.main.screen_main.components.PlanListItem
+import com.ruskaof.myt.presentation.main.screen_menu.screen_archieve.components.RedactionPlanDialog
 import com.ruskaof.myt.presentation.main.screen_new_plan.components.TopBar
 import com.ruskaof.myt.presentation.theme.AppTheme
 import java.time.LocalDateTime
@@ -27,6 +26,13 @@ fun ArchiveScreen(
     viewModel: ArchiveScreenViewModel = hiltViewModel()
 ) {
     val listState: List<Plan> by viewModel.getAllPlans().collectAsState(initial = emptyList())
+    val dialogIsOpen = remember { mutableStateOf(false) }
+    val selectedPlan = remember {
+        mutableStateOf(Plan("error", LocalDateTime.MIN, LocalDateTime.MAX))
+    }
+    var newNameOfPlanState = remember {
+        mutableStateOf("")
+    }
 
     Scaffold(
         topBar = { TopBar(text = "Archive") },
@@ -36,10 +42,19 @@ fun ArchiveScreen(
             }
         }
     ) {
+        if (dialogIsOpen.value) {
+            RedactionPlanDialog(openDialogCustom = dialogIsOpen, onOk = {
+                viewModel.updatePlan(selectedPlan.value.copy(name = newNameOfPlanState.value))
+            }, onCancel = {}, "Write a new plan name", newNameOfPlanState)
+        }
+
+
         LazyColumn(modifier = Modifier.background(AppTheme.colors.primaryBackground)) {
             itemsIndexed(listState) { index, plan ->
                 val nextDayStarted =
-                    index == 0 || listState[index].startTime.dayOfYear != listState[index - 1].startTime.dayOfYear || listState[index].startTime.year != listState[index - 1].startTime.year
+                    index == 0
+                            || listState[index].startTime.dayOfYear != listState[index - 1].startTime.dayOfYear
+                            || listState[index].startTime.year != listState[index - 1].startTime.year
                 if (nextDayStarted) {
                     val isToday = LocalDateTime.now().dayOfYear == plan.startTime.dayOfYear
                     NewDayHeader(localDateTime = plan.startTime, isToday)
@@ -58,7 +73,8 @@ fun ArchiveScreen(
                         fontWeight = FontWeight.Light
                     ),
                     onLongPress = {
-
+                        selectedPlan.value = plan
+                        dialogIsOpen.value = true
                     },
                     planNameTextStyle = TextStyle(
                         color = AppTheme.colors.contrastTextColor,

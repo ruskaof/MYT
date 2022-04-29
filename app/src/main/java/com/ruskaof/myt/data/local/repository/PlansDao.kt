@@ -30,5 +30,5 @@ interface PlansDao {
     suspend fun insertPlan(planDbo: PlanDbo): Long
 
     @Update(entity = PlanDbo::class)
-    fun updatePlan(planDbo: PlanDbo)
+    suspend fun updatePlan(planDbo: PlanDbo)
 }

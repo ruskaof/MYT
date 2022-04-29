@@ -35,7 +35,8 @@ private fun List<Plan>.groupByNameAndSum(): HashMap<String, Long> {
 
     for (item in this) {
         hm[item.name] =
-            hm.getOrDefault(item.name, 0) + ChronoUnit.MINUTES.between(item.startTime, item.endTime)
+            hm.getOrDefault(item.name, 0) +
+                    ChronoUnit.MINUTES.between(item.startTime, item.endTime)
     }
 
     return hm
