@@ -126,7 +126,7 @@ fun BarChart(
         for (i in normalisedData.indices) {
             drawIntoCanvas {
                 it.nativeCanvas.drawText(
-                    "${normalisedData[i].first}, ${data[i].second} min",
+                    "${data[i].second} min - ${normalisedData[i].first}",
                     0f, //axisWidth.toPx(),
                     (i * lineWidth + lineWidth / 1.2f),
                     textPaint

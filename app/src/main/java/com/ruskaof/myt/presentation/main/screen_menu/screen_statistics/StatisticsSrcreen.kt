@@ -109,6 +109,7 @@ fun StatisticsScreen(
                         .fillMaxWidth()
                         .height((barStats.size * 50).dp),
                     barsColor = AppTheme.colors.secondary,
+                    perceptibleColoredTextColor = AppTheme.colors.primaryTextColor
                 )
             }
         }
