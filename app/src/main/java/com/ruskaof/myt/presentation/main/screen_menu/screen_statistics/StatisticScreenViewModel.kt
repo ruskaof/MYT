@@ -23,11 +23,27 @@ class StatisticScreenViewModel @Inject constructor(
         return getAllPlans()
     }
 
-    fun calculateTimeMinutes(list: List<Plan>): List<Pair<String, Long>> {
+    fun calculateTimeMinutesSorted(list: List<Plan>): List<Pair<String, Long>> {
         return list.groupByNameAndSum().map { it.key to it.value }
             .sortedWith { it, that -> (that.second - it.second).toInt() }
     }
 
+    fun calculateMinutesOfFirstSixAndOthersSorted(list: List<Plan>): List<Pair<String, Long>> {
+        val all = calculateTimeMinutesSorted(list = list)
+        if (all.size <= 7) return all
+        val toReturn = mutableListOf<Pair<String, Long>>()
+        for (i in 0 until 6) {
+            toReturn.add(all[i])
+        }
+        toReturn.add(kotlin.run {
+            var sum = 0L
+            for (i in 6 until all.size) {
+                sum += all[i].second
+            }
+            Pair("Other", sum)
+        })
+        return toReturn
+    }
 }
 
 private fun List<Plan>.groupByNameAndSum(): HashMap<String, Long> {

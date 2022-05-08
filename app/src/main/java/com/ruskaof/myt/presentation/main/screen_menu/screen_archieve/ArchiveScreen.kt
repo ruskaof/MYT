@@ -5,9 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -39,16 +37,11 @@ fun ArchiveScreen(
 
     Scaffold(
         topBar = { TopBar(text = "Archive") },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.removeAllPlans() }) {
-                Text("Clear", style = TextStyle(color = AppTheme.colors.primaryTextColor))
-            }
-        }
     ) {
         if (dialogIsOpen.value) {
             RedactionPlanDialog(openDialogCustom = dialogIsOpen, onOk = {
                 if (newNameOfPlanState.value.isNotEmpty()) {
-                    viewModel.updatePlan(selectedPlan.value.copy(name = newNameOfPlanState.value))
+                    viewModel.updatePlan(selectedPlan.value.copy(name = newNameOfPlanState.value.trim()))
                     newNameOfPlanState.value = ""
                 } else {
                     Toast.makeText(

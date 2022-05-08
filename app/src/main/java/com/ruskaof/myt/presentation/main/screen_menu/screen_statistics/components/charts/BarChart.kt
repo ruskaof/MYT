@@ -36,7 +36,7 @@ fun BarChart(
 ) {
     val maxValue by remember {
         mutableStateOf(
-            data.maxByOrNull { it.second }?.second?.times(1.2f)?.roundToLong() ?: 0
+            data.maxByOrNull { it.second }?.second?.times(1.05f)?.roundToLong() ?: 0
         )
     }
     val minValue by remember {

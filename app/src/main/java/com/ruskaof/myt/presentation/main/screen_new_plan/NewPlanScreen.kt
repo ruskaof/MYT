@@ -40,7 +40,7 @@ fun NewPlanScreen(
             FloatingActionButton(onClick = {
                 if (viewModel.startTimeState.value.isBefore(viewModel.endTimeState.value) && writePlanName.isNotEmpty()) {
                     if (!repeatChecked.value) {
-                        viewModel.writePlan(
+                        viewModel.writePlanWithTrim(
                             writePlanName,
                             viewModel.startTimeState.value,
                             viewModel.endTimeState.value
@@ -50,7 +50,7 @@ fun NewPlanScreen(
                             "NewPlanScreen: adding a new plan: $writePlanName ${viewModel.startTimeState.value} ${viewModel.endTimeState.value}"
                         )
                     } else {
-                        viewModel.writePlan(
+                        viewModel.writePlanWithTrim(
                             writePlanName,
                             viewModel.startTimeState.value,
                             viewModel.endTimeState.value,

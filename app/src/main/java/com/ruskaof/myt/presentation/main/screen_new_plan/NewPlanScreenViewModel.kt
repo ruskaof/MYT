@@ -33,26 +33,28 @@ class NewPlanScreenViewModel @Inject constructor(
     private val _endTimeState = mutableStateOf<LocalDateTime>(currentTime)
     val endTimeState: State<LocalDateTime> = _endTimeState
 
-    fun writePlan(name: String, startTime: LocalDateTime, endTime: LocalDateTime) {
+    fun writePlanWithTrim(name: String, startTime: LocalDateTime, endTime: LocalDateTime) {
+        val trimmedName = name.trim()
         MainScope().launch {
-            writePlanUseCase(Plan(name, startTime, endTime))
+            writePlanUseCase(Plan(trimmedName, startTime, endTime))
         }
     }
 
-    fun writePlan(
+    fun writePlanWithTrim(
         name: String,
         startTime: LocalDateTime,
         endTime: LocalDateTime,
         period: Period,
         times: Int
     ) {
+        val trimmedName = name.trim()
         when (period) {
             Period.DAY -> {
                 for (i in 0 until times) {
                     MainScope().launch {
                         writePlanUseCase(
                             Plan(
-                                name,
+                                trimmedName,
                                 startTime.plusDays(1 * i.toLong()),
                                 endTime.plusDays(1 * i.toLong())
                             )
@@ -65,7 +67,7 @@ class NewPlanScreenViewModel @Inject constructor(
                     MainScope().launch {
                         writePlanUseCase(
                             Plan(
-                                name,
+                                trimmedName,
                                 startTime.plusWeeks(i.toLong()),
                                 endTime.plusWeeks(i.toLong())
                             )
@@ -78,7 +80,7 @@ class NewPlanScreenViewModel @Inject constructor(
                     MainScope().launch {
                         writePlanUseCase(
                             Plan(
-                                name,
+                                trimmedName,
                                 startTime.plusWeeks(2 * i.toLong()),
                                 endTime.plusWeeks(2 * i.toLong())
                             )

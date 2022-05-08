@@ -33,22 +33,27 @@ fun StatisticsScreen(
     val beforeTodayListState: List<Plan> by viewModel.getAllPlansBeforeToday()
         .collectAsState(initial = emptyList())
     val barStats =
-        if (beforeTodayListState.isEmpty()) emptyList() else viewModel.calculateTimeMinutes(
+        if (beforeTodayListState.isEmpty()) emptyList() else viewModel.calculateTimeMinutesSorted(
             beforeTodayListState
         )
-            .take(5)
 
     Log.d("MAIN_TAG", "StatisticsScreen: $beforeTodayListState")
     Log.d("MAIN_TAG", "StatisticsScreen: $barStats")
 
 //    val allListState: List<Plan> by viewModel.getAllPlans()
 //        .collectAsState(initial = emptyList())
-    val pieStats = viewModel.calculateTimeMinutes(beforeTodayListState)
+    val pieStats = viewModel.calculateMinutesOfFirstSixAndOthersSorted(beforeTodayListState)
     val pieChartItems by derivedStateOf {
         run {
             val list = mutableListOf<PieChartItem>()
-            for (item in pieStats) {
-                list.add(PieChartItem(item.first, item.second, colorCollection.random()))
+            for (i in pieStats.indices) {
+                list.add(
+                    PieChartItem(
+                        pieStats[i].first,
+                        pieStats[i].second,
+                        colorCollection[i % 7]
+                    )
+                )
             }
             list.toList()
         }
@@ -80,6 +85,18 @@ fun StatisticsScreen(
             ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
+                    text = "Overall stats", style = TextStyle(
+                        color = AppTheme.colors.primaryTextColor,
+                        fontSize = 30.sp,
+                        textAlign = TextAlign.Center
+                    )
+                )
+                PieChart(
+                    items = pieChartItems,
+                    modifier = Modifier.size(LocalConfiguration.current.screenWidthDp.dp)
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
                     text = "Top plans by time:", style = TextStyle(
                         color = AppTheme.colors.primaryTextColor,
                         fontSize = 30.sp,
@@ -90,20 +107,8 @@ fun StatisticsScreen(
                     data = barStats,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(300.dp),
+                        .height((barStats.size * 50).dp),
                     barsColor = AppTheme.colors.secondary,
-                )
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Overall stats", style = TextStyle(
-                        color = AppTheme.colors.primaryTextColor,
-                        fontSize = 30.sp,
-                        textAlign = TextAlign.Center
-                    )
-                )
-                PieChart(
-                    items = pieChartItems,
-                    modifier = Modifier.size(LocalConfiguration.current.screenWidthDp.dp)
                 )
             }
         }
