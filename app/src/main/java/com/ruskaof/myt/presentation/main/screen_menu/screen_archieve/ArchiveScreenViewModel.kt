@@ -1,5 +1,6 @@
 package com.ruskaof.myt.presentation.main.screen_menu.screen_archieve
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ruskaof.myt.domain.model.Plan
@@ -18,6 +19,10 @@ class ArchiveScreenViewModel @Inject constructor(
     private val removePassedPlansUseCase: RemovePassedPlansUseCase,
     private val updatePlanUseCase: UpdatePlanUseCase,
 ) : ViewModel() {
+    init {
+        Log.d("MAIN_TAG", "made an archive screen view model")
+    }
+
     fun getAllPlans(): Flow<List<Plan>> {
         return getAllPlansBeforeTodayUseCase()
     }

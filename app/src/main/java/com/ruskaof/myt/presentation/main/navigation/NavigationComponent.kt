@@ -41,8 +41,6 @@ fun NavigationComponent(
 
         composable(
             route = Screen.NewPlanScreen.route,
-//            enterTransition = { _, _ -> enterTransitionAnimation() },
-//            exitTransition = { _, _ -> exitTransitionAnimation() }
         ) {
             NewPlanScreen(context = context, navController = navController)
         }

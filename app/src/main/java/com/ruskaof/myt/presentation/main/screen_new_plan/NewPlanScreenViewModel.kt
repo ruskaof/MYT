@@ -18,6 +18,10 @@ import javax.inject.Inject
 class NewPlanScreenViewModel @Inject constructor(
     private val writePlanUseCase: WritePlanUseCase
 ) : ViewModel() {
+    init {
+        Log.d("MAIN_TAG", "made a new plan view model")
+    }
+
     private val currentTime = LocalDateTime.of(
         Calendar.getInstance().get(Calendar.YEAR),
         Calendar.getInstance().get(Calendar.MONTH) + 1,
