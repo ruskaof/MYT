@@ -12,34 +12,58 @@ import javax.inject.Inject
 class PomodoroScreenViewModel @Inject constructor(
 
 ) : ViewModel() {
-    val periodLengthMills = 25 * 60 * 1000
+    val workPeriodMills = 25 * 60 * 1000
+    val restPeriodMills = 5 * 60 * 1000
+
 
     private val _timerIsRunning = mutableStateOf(false)
     val timerIsRunning: State<Boolean> = _timerIsRunning
 
+    // Every even number is considered working
     private val _periodsPassed = mutableStateOf(0)
     val periodsPassed: State<Int> = _periodsPassed
 
     private val _currentSeconds = mutableStateOf(0)
     val currentSeconds: State<Int> = _currentSeconds
 
-    fun start() {
+    fun startTimer() {
         if (!timerIsRunning.value) {
-            val timer: CountDownTimer = object : CountDownTimer(
-                periodLengthMills.toLong(), 1000
-            ) {
-                override fun onTick(p0: Long) {
-                    _currentSeconds.value = (p0 / 1000).toInt()
-                    Log.d("MAIN_TAG", "onTick:${currentSeconds.value}")
-                }
+            if (periodsPassed.value % 2 == 0) {
 
-                override fun onFinish() {
-                    _periodsPassed.value++
-                    _timerIsRunning.value = false
-                }
+                object : CountDownTimer(
+                    workPeriodMills.toLong(), 1000
+                ) {
+                    override fun onTick(p0: Long) {
+                        _currentSeconds.value = (p0 / 1000).toInt()
+                        Log.d("MAIN_TAG", "onTick:${currentSeconds.value}")
+                    }
 
-            }.start()
-            _timerIsRunning.value = true
+                    override fun onFinish() {
+                        _periodsPassed.value++
+                        _timerIsRunning.value = false
+                    }
+
+                }.start()
+                _timerIsRunning.value = true
+
+
+            } else {
+                object : CountDownTimer(
+                    restPeriodMills.toLong(), 1000
+                ) {
+                    override fun onTick(p0: Long) {
+                        _currentSeconds.value = (p0 / 1000).toInt()
+                        Log.d("MAIN_TAG", "onTick:${currentSeconds.value}")
+                    }
+
+                    override fun onFinish() {
+                        _periodsPassed.value++
+                        _timerIsRunning.value = false
+                    }
+
+                }.start()
+
+            }
         }
     }
 }

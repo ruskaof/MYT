@@ -25,9 +25,9 @@ import com.ruskaof.myt.common.niceTime
 fun TimerVisualiser(
     currentSeconds: Int,
     secondsToEnd: Int,
-    backgroundIndicatorColor: Color,
     strokeWidth: Dp,
     foregroundIndicatorColor: Color,
+    backgroundIndicatorColor: Color,
     textStyle: TextStyle
 ) {
     val minutesLeft = (currentSeconds) / 60
@@ -47,14 +47,15 @@ fun TimerVisualiser(
                     componentSize = canvasSize,
                     indicatorColor = foregroundIndicatorColor,
                     indicatorStrokeWidth = strokeWidth.toPx(),
-                    sweepAngle = 240f * (currentSeconds.toFloat() / secondsToEnd)
+                    sweepAngle = 360f * (secondsToEnd - currentSeconds) / secondsToEnd.toFloat()
                 )
             },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = niceTime(minutesLeft, secondsLeft)
+            text = niceTime(minutesLeft, secondsLeft),
+            style = textStyle
         )
     }
 }
@@ -63,12 +64,12 @@ fun DrawScope.backgroundIndicator(
     componentSize: Size,
     indicatorColor: Color,
     indicatorStrokeWidth: Float,
-    sweepAngle: Float = 240f,
+    sweepAngle: Float = 360f,
 ) {
     drawArc(
         size = componentSize,
         color = indicatorColor,
-        startAngle = 150f,
+        startAngle = 0f,
         sweepAngle = sweepAngle,
         useCenter = false,
         style = Stroke(
@@ -93,7 +94,7 @@ fun TimerVisualiserPreview() {
         foregroundIndicatorColor = Color.Cyan,
         textStyle = TextStyle(
             color = Color.Black,
-            fontSize = 200.sp
+            fontSize = 20.sp
         )
     )
 }
