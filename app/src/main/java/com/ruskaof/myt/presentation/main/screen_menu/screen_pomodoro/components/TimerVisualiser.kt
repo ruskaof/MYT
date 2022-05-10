@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ruskaof.myt.common.niceTime
@@ -25,12 +26,12 @@ fun TimerVisualiser(
     currentSeconds: Int,
     secondsToEnd: Int,
     backgroundIndicatorColor: Color,
-    strokeWidth: Float,
+    strokeWidth: Dp,
     foregroundIndicatorColor: Color,
     textStyle: TextStyle
 ) {
-    val minutesLeft = (secondsToEnd - currentSeconds) / 60
-    val secondsLeft = (secondsToEnd - currentSeconds) % 60
+    val minutesLeft = (currentSeconds) / 60
+    val secondsLeft = (currentSeconds) % 60
 
     Column(
         modifier = Modifier
@@ -40,12 +41,12 @@ fun TimerVisualiser(
                 backgroundIndicator(
                     componentSize = canvasSize,
                     indicatorColor = backgroundIndicatorColor,
-                    indicatorStrokeWidth = strokeWidth
+                    indicatorStrokeWidth = strokeWidth.toPx()
                 )
                 backgroundIndicator(
                     componentSize = canvasSize,
                     indicatorColor = foregroundIndicatorColor,
-                    indicatorStrokeWidth = strokeWidth,
+                    indicatorStrokeWidth = strokeWidth.toPx(),
                     sweepAngle = 240f * (currentSeconds.toFloat() / secondsToEnd)
                 )
             },
@@ -88,11 +89,11 @@ fun TimerVisualiserPreview() {
         currentSeconds = 60,
         secondsToEnd = 300,
         backgroundIndicatorColor = Color.Gray,
-        strokeWidth = 80f,
+        strokeWidth = 30.dp,
         foregroundIndicatorColor = Color.Cyan,
         textStyle = TextStyle(
             color = Color.Black,
-            fontSize = 100.sp
+            fontSize = 200.sp
         )
     )
 }

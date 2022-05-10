@@ -1,4 +1,5 @@
-package com.ruskaof.myt.presentation.main.screen_main
+package com.ruskaof.myt.presentation.main.screen_schedule
+
 
 import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainScreenViewModel @Inject constructor(
+class ScheduleScreenViewModel @Inject constructor(
     private val getAllPlansAfterTodayUseCase: GetAllPlansAfterTodayUseCase,
     private val removePlanUseCase: RemovePlanUseCase
 ) : ViewModel() {
@@ -28,5 +29,9 @@ class MainScreenViewModel @Inject constructor(
         MainScope().launch {
             removePlanUseCase(id)
         }
+    }
+
+    init {
+        Log.d("MAIN_TAG", "made a main screen view model")
     }
 }

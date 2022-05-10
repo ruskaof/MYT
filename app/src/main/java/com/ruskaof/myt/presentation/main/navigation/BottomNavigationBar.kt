@@ -5,19 +5,20 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun BottomNavigationBar(
     backgroundColor: Color,
     contentColor: Color,
-    navController: NavController
+    navController: NavController,
+    topBarText: MutableState<String>
 ) {
     val items = listOf(
         BottomNavigationItem.Schedule,
@@ -40,28 +41,26 @@ fun BottomNavigationBar(
                 label = { Text(it.title) },
                 onClick = {
                     navController.navigate(it.route) {
-                        // Pop up to the start destination of the graph to
-                        // avoid building up a large stack of destinations
-                        // on the back stack as users select items
-                        popUpTo(it.route) // TODO: understand how it works and fix a bug
-                        // Avoid multiple copies of the same destination when
-                        // reselecting the same item
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
                         launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
                         restoreState = true
                     }
+                    topBarText.value = it.title
                 }
             )
         }
     }
 }
 
-@Preview
-@Composable
-fun BottomNavigationBarPreview() {
-    BottomNavigationBar(
-        backgroundColor = Color.Red,
-        contentColor = Color.Blue,
-        rememberNavController()
-    )
-}
+//@Preview
+//@Composable
+//fun BottomNavigationBarPreview() {
+//    BottomNavigationBar(
+//        backgroundColor = Color.Red,
+//        contentColor = Color.Blue,
+//        rememberNavController(),
+//
+//    )
+//}

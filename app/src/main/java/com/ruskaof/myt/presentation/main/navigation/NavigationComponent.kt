@@ -10,8 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ruskaof.myt.presentation.Screen
 import com.ruskaof.myt.presentation.main.screen_main.MainScreen
-import com.ruskaof.myt.presentation.main.screen_menu.MenuScreen
 import com.ruskaof.myt.presentation.main.screen_menu.screen_archieve.ArchiveScreen
+import com.ruskaof.myt.presentation.main.screen_menu.screen_pomodoro.PomodoroScreen
 import com.ruskaof.myt.presentation.main.screen_menu.screen_settings.SettingsScreen
 import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.StatisticsScreen
 import com.ruskaof.myt.presentation.main.screen_new_plan.NewPlanScreen
@@ -34,54 +34,10 @@ fun NavigationComponent(
             AnimatedSplashScreen(navController)
         }
 
-        composable(
-            route = Screen.MainScreen.route,
-//            enterTransition = { initial, _ ->
-//                if (initial.destination.route == BottomNavigationItem.Menu.route ||
-//                    initial.destination.route == BottomNavigationItem.Schedule.route
-//                ) {
-//                    EnterTransition.None
-//                } else {
-//                    enterTransitionAnimation()
-//                }
-//            },
-//            exitTransition = { _, target ->
-//                if (target.destination.route == BottomNavigationItem.Menu.route ||
-//                    target.destination.route == BottomNavigationItem.Schedule.route
-//                ) {
-//                    ExitTransition.None
-//                } else {
-//                    exitTransitionAnimation()
-//                }
-//            }
-        ) {
+        composable(Screen.MainScreen.route) {
             MainScreen(navController = navController)
         }
 
-
-        composable(
-            route = Screen.MenuScreen.route,
-//            enterTransition = { initial, _ ->
-//                if (initial.destination.route == BottomNavigationItem.Menu.route ||
-//                    initial.destination.route == BottomNavigationItem.Schedule.route
-//                ) {
-//                    EnterTransition.None
-//                } else {
-//                    enterTransitionAnimation()
-//                }
-//            },
-//            exitTransition = { _, target ->
-//                if (target.destination.route == BottomNavigationItem.Menu.route ||
-//                    target.destination.route == BottomNavigationItem.Schedule.route
-//                ) {
-//                    ExitTransition.None
-//                } else {
-//                    exitTransitionAnimation()
-//                }
-//            }
-        ) {
-            MenuScreen(navController = navController)
-        }
 
         composable(
             route = Screen.NewPlanScreen.route,
@@ -107,6 +63,12 @@ fun NavigationComponent(
             route = Screen.StatisticsScreen.route
         ) {
             StatisticsScreen()
+        }
+
+        composable(
+            route = Screen.PomodoroScreen.route
+        ) {
+            PomodoroScreen()
         }
     }
 }

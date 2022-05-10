@@ -10,7 +10,7 @@ sealed class BottomNavigationItem(
 ) {
     object Schedule :
         BottomNavigationItem(
-            Screen.MainScreen.route,
+            Screen.ScheduleScreen.route,
             R.drawable.ic_baseline_access_time_filled_24,
             "Schedule"
         )
