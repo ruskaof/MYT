@@ -15,6 +15,8 @@ class PomodoroScreenViewModel @Inject constructor(
     val workPeriodMills = 25 * 60 * 1000
     val restPeriodMills = 5 * 60 * 1000
 
+    private var timer: CountDownTimer? = null
+
 
     private val _timerIsRunning = mutableStateOf(false)
     val timerIsRunning: State<Boolean> = _timerIsRunning
@@ -30,7 +32,7 @@ class PomodoroScreenViewModel @Inject constructor(
         if (!timerIsRunning.value) {
             if (periodsPassed.value % 2 == 0) {
 
-                object : CountDownTimer(
+                timer = object : CountDownTimer(
                     workPeriodMills.toLong(), 1000
                 ) {
                     override fun onTick(p0: Long) {
@@ -44,11 +46,10 @@ class PomodoroScreenViewModel @Inject constructor(
                     }
 
                 }.start()
-                _timerIsRunning.value = true
 
 
             } else {
-                object : CountDownTimer(
+                timer = object : CountDownTimer(
                     restPeriodMills.toLong(), 1000
                 ) {
                     override fun onTick(p0: Long) {
@@ -64,6 +65,17 @@ class PomodoroScreenViewModel @Inject constructor(
                 }.start()
 
             }
+            _timerIsRunning.value = true
+
+        }
+    }
+
+    fun skipCurrent() {
+        if (timerIsRunning.value) {
+            timer!!.cancel()
+            _currentSeconds.value = 0
+            _timerIsRunning.value = false
+            _periodsPassed.value++
         }
     }
 }

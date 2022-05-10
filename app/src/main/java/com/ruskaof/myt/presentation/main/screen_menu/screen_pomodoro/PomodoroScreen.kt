@@ -45,11 +45,26 @@ fun PomodoroScreen(
             backgroundIndicatorColor = Color.Gray
         )
 
+        Text(text = "period: ${viewModel.periodsPassed}")
+
         OutlinedButton(onClick = {
             viewModel.startTimer()
         }) {
             Text(
                 "Start",
+                style = TextStyle(
+                    color = AppTheme.colors.primaryTextColor,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Light
+                )
+            )
+        }
+
+        OutlinedButton(onClick = {
+            viewModel.skipCurrent()
+        }) {
+            Text(
+                "Skip",
                 style = TextStyle(
                     color = AppTheme.colors.primaryTextColor,
                     fontSize = 30.sp,
