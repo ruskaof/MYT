@@ -23,6 +23,7 @@ fun NavigationComponent(
     navController: NavHostController,
     context: Context,
 ) {
+
     NavHost(
         navController = navController,
         startDestination = Screen.AnimatedSplashScreen.route
@@ -48,7 +49,7 @@ fun NavigationComponent(
         composable(
             route = Screen.ArchiveScreen.route
         ) {
-            ArchiveScreen(context = context)
+            ArchiveScreen(context = context, navController = navController)
         }
 
         composable(
@@ -60,13 +61,13 @@ fun NavigationComponent(
         composable(
             route = Screen.StatisticsScreen.route
         ) {
-            StatisticsScreen()
+            StatisticsScreen(navController = navController)
         }
 
         composable(
             route = Screen.PomodoroScreen.route
         ) {
-            PomodoroScreen()
+            PomodoroScreen(navController = navController)
         }
     }
 }

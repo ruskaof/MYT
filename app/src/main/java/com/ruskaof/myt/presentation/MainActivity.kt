@@ -28,8 +28,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //val screenChangeDuration = 200
-
         setContent {
             val context = this
             val isDarkModeValue = isSystemInDarkTheme()
@@ -45,8 +43,8 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            val navController: NavHostController = rememberNavController()
 
+            val navController: NavHostController = rememberNavController()
             MainTheme(
                 darkTheme = isDarkMode.value
             ) {

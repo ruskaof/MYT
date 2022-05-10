@@ -36,7 +36,11 @@ fun MenuScreen(
             MenuItemCard(
                 icon = Icons.Default.Info,
                 iconColor = AppTheme.colors.secondary,
-                onClick = { navController.navigate(Screen.ArchiveScreen.route) },
+                onClick = {
+                    navController.navigate(Screen.ArchiveScreen.route) {
+                        restoreState = true
+                    }
+                },
                 label = "Archive"
             )
 
@@ -50,14 +54,22 @@ fun MenuScreen(
             MenuItemCard(
                 icon = Icons.Default.Star,
                 iconColor = AppTheme.colors.secondary,
-                onClick = { navController.navigate(Screen.StatisticsScreen.route) },
+                onClick = {
+                    navController.navigate(Screen.StatisticsScreen.route) {
+                        restoreState = true
+                    }
+                },
                 label = "Stats"
             )
 
             MenuItemCard(
                 icon = Icons.Default.Star,
                 iconColor = AppTheme.colors.secondary,
-                onClick = { navController.navigate(Screen.PomodoroScreen.route) },
+                onClick = {
+                    navController.navigate(Screen.PomodoroScreen.route) {
+                        restoreState = true
+                    }
+                },
                 label = "Pomodoro"
             )
         }

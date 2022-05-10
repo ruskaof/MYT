@@ -27,6 +27,9 @@ fun NewPlanScreen(
     navController: NavController,
     context: Context
 ) {
+
+
+    Log.d("MAIN_TAG", "NewPlanScreen: ${navController.currentDestination}")
     val repeatChecked = remember { mutableStateOf(false) }
     val selectedPeriod = remember { mutableStateOf(Period.DAY) }
     val timesValue = remember { mutableStateOf(2) }

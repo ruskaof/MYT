@@ -1,6 +1,7 @@
 package com.ruskaof.myt.presentation.main.screen_menu.screen_statistics
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.ruskaof.myt.domain.model.Plan
 import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.components.charts.BarChart
 import com.ruskaof.myt.presentation.main.screen_menu.screen_statistics.components.charts.PieChart
@@ -28,8 +30,17 @@ import com.ruskaof.myt.presentation.theme.AppTheme
 
 @Composable
 fun StatisticsScreen(
-    viewModel: StatisticScreenViewModel = hiltViewModel()
+    viewModel: StatisticScreenViewModel = hiltViewModel(),
+    navController: NavController
 ) {
+    BackHandler {
+        navController.popBackStack(
+            saveState = true,
+            destinationId = navController.currentDestination!!.id,
+            inclusive = true
+        )
+    }
+
     val beforeTodayListState: List<Plan> by viewModel.getAllPlansBeforeToday()
         .collectAsState(initial = emptyList())
     val barStats =

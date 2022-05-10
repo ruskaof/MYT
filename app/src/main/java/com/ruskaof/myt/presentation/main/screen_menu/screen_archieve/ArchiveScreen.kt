@@ -2,6 +2,7 @@ package com.ruskaof.myt.presentation.main.screen_menu.screen_archieve
 
 import android.content.Context
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -13,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.ruskaof.myt.domain.model.Plan
 import com.ruskaof.myt.presentation.main.screen_main.components.NewDayHeader
 import com.ruskaof.myt.presentation.main.screen_main.components.PlanListItem
@@ -24,8 +26,17 @@ import java.time.LocalDateTime
 @Composable
 fun ArchiveScreen(
     viewModel: ArchiveScreenViewModel = hiltViewModel(),
+    navController: NavController,
     context: Context
 ) {
+    BackHandler {
+        navController.popBackStack(
+            saveState = true,
+            destinationId = navController.currentDestination!!.id,
+            inclusive = true
+        )
+    }
+
     val listState: List<Plan> by viewModel.getAllPlans().collectAsState(initial = emptyList())
     val dialogIsOpen = remember { mutableStateOf(false) }
     val selectedPlan = remember {

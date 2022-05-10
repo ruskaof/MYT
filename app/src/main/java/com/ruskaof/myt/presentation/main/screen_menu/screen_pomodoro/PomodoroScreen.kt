@@ -1,5 +1,6 @@
 package com.ruskaof.myt.presentation.main.screen_menu.screen_pomodoro
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.runtime.Composable
@@ -8,13 +9,23 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.ruskaof.myt.presentation.main.screen_menu.screen_pomodoro.components.TimerVisualiser
 import com.ruskaof.myt.presentation.theme.AppTheme
 
 @Composable
 fun PomodoroScreen(
-    viewModel: PomodoroScreenViewModel = hiltViewModel()
+    viewModel: PomodoroScreenViewModel = hiltViewModel(),
+    navController: NavController
 ) {
+    BackHandler {
+        navController.popBackStack(
+            saveState = true,
+            destinationId = navController.currentDestination!!.id,
+            inclusive = true
+        )
+    }
+
     Column {
 
         TimerVisualiser(
