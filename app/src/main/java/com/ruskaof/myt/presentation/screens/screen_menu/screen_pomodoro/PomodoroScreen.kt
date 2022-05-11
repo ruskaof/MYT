@@ -10,8 +10,7 @@ import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,9 +32,10 @@ fun PomodoroScreen(
     navController: NavController
 ) {
     val currentSeconds = viewModel.currentSeconds.value
+    var isTheFirstComposition by remember { mutableStateOf(true) }
 
     LaunchedEffect(key1 = viewModel.periodsPassed.value) {
-        if (viewModel.periodsPassed.value != 0) {
+        if (viewModel.periodsPassed.value != 0 && !isTheFirstComposition) {
             makeSimpleNotification(
                 context = context,
                 channelId = Constants.NOTIFICATION_CHANNEL_ID,
@@ -44,6 +44,7 @@ fun PomodoroScreen(
                 textContent = "It's time to continue!"
             )
         }
+        isTheFirstComposition = false
     }
 
 
