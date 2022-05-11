@@ -13,7 +13,7 @@ data class AppColors(
     val perceptibleColoredTextColor: Color,
     val primary: Color,
     val secondary: Color,
-    val dialogColor: Color
+    val dialogColor: Color,
 )
 
 data class AppShapes(
