@@ -21,7 +21,8 @@ fun PieChart(
         PieChartItem("banana", 5, Color.Yellow),
         PieChartItem("pie", 7, Color.Cyan)
     ),
-    isAlreadyShown: Boolean = false
+    isAlreadyShown: Boolean = false,
+    textColor: Color
 ) {
     var pieChartIsShown by remember { mutableStateOf(isAlreadyShown) }
 
@@ -79,14 +80,14 @@ fun PieChart(
 
         }
         for (i in items.indices) {
-            DisplayLegend(color = items[i].color, legend = items[i].name)
+            DisplayLegend(color = items[i].color, legend = items[i].name, textColor = textColor)
         }
     }
 
 }
 
 @Composable
-fun DisplayLegend(color: Color, legend: String) {
+fun DisplayLegend(color: Color, legend: String, textColor: Color) {
 
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -102,7 +103,7 @@ fun DisplayLegend(color: Color, legend: String) {
 
         Text(
             text = legend,
-            color = Color.Black
+            color = textColor
         )
     }
 }
@@ -110,5 +111,5 @@ fun DisplayLegend(color: Color, legend: String) {
 @Preview
 @Composable
 fun PieChartPreview() {
-    PieChart(isAlreadyShown = true)
+    PieChart(isAlreadyShown = true, textColor = Color.Black)
 }

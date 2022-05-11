@@ -10,8 +10,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -30,9 +28,6 @@ fun MainScreen(
     navController: NavController,
 ) {
     val bottomNavController = rememberNavController()
-    val topBarText = remember {
-        mutableStateOf("Schedule")
-    }
 
     Scaffold(
         floatingActionButton = {
@@ -45,7 +40,7 @@ fun MainScreen(
         },
         topBar = {
             TopBar(
-                text = topBarText.value
+                "Schedule"
             )
         },
         backgroundColor = AppTheme.colors.primaryBackground,
@@ -54,7 +49,6 @@ fun MainScreen(
                 backgroundColor = AppTheme.colors.primary,
                 contentColor = AppTheme.colors.secondary,
                 navController = bottomNavController,
-                topBarText = topBarText
             )
         }
     ) { innerPadding ->

@@ -29,15 +29,17 @@ private fun OnLongPressDialogUI(
     onCancel: () -> Unit,
     primaryTextColor: Color = AppTheme.colors.primaryTextColor,
     secondaryColor: Color = AppTheme.colors.secondary,
-    text: String
+    text: String,
+    backgroundColor: Color
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
         elevation = 8.dp,
+        backgroundColor = backgroundColor
     ) {
         Column(
-            Modifier.background(Color.White)
+
         ) {
             Box(
                 modifier = Modifier
@@ -94,14 +96,16 @@ fun OnLongPressDialog(
     openDialogCustom: MutableState<Boolean>,
     onOk: () -> Unit,
     onCancel: () -> Unit,
-    text: String = "Are you sure you want to delete this plan?"
+    text: String = "Are you sure you want to delete this plan?",
+    backgroundColor: Color
 ) {
     Dialog(onDismissRequest = { openDialogCustom.value = false }) {
         OnLongPressDialogUI(
             dialogIsOpen = openDialogCustom,
             onOk = onOk,
             onCancel = onCancel,
-            text = text
+            text = text,
+            backgroundColor = backgroundColor
         )
     }
 }
@@ -116,6 +120,7 @@ private fun OnLOngPressDialogPreview() {
         onCancel = { },
         primaryTextColor = Color.Black,
         secondaryColor = Color(0xFFB3E5FC),
-        text = "Text text text"
+        text = "Text text text",
+        backgroundColor = Color.White
     )
 }

@@ -43,7 +43,9 @@ fun ScheduleScreen(
     if (dialogIsOpen.value) {
         OnLongPressDialog(openDialogCustom = dialogIsOpen, onOk = {
             viewModel.removePlan(selectedPlanId.value)
-        }, onCancel = {})
+        }, onCancel = {},
+            backgroundColor = AppTheme.colors.primaryBackground
+        )
     }
 
     if (listState.isEmpty()) {

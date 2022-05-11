@@ -5,7 +5,6 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -18,7 +17,6 @@ fun BottomNavigationBar(
     backgroundColor: Color,
     contentColor: Color,
     navController: NavController,
-    topBarText: MutableState<String>
 ) {
     val items = listOf(
         BottomNavigationItem.Schedule,
@@ -47,7 +45,6 @@ fun BottomNavigationBar(
                         launchSingleTop = true
                         restoreState = true
                     }
-                    topBarText.value = it.title
                 }
             )
         }

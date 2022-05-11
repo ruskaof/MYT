@@ -1,17 +1,14 @@
 package com.ruskaof.myt.presentation.screens.screen_menu
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -25,13 +22,13 @@ fun MenuScreen(
     viewModel: MenuScreenViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    CompositionLocalProvider(
-        LocalOverScrollConfiguration provides null // Disabling overscroll animation
+
+    Column(
+        modifier = Modifier
+            .fillMaxHeight(1 / 2f)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
+            modifier = Modifier.weight(1f)
         ) {
             MenuItemCard(
                 icon = Icons.Default.Info,
@@ -41,16 +38,24 @@ fun MenuScreen(
                         restoreState = true
                     }
                 },
-                label = "Archive"
+                label = "Archive",
+                backgroundColor = AppTheme.colors.primaryBackground,
+                modifier = Modifier.weight(1f)
             )
 
             MenuItemCard(
                 icon = Icons.Default.Settings,
                 iconColor = AppTheme.colors.secondary,
                 onClick = { navController.navigate(Screen.SettingsScreen.route) },
-                label = "Settings"
+                label = "Settings",
+                backgroundColor = AppTheme.colors.primaryBackground,
+                modifier = Modifier.weight(1f)
             )
+        }
 
+        Row(
+            modifier = Modifier.weight(1f)
+        ) {
             MenuItemCard(
                 icon = Icons.Default.Star,
                 iconColor = AppTheme.colors.secondary,
@@ -59,7 +64,9 @@ fun MenuScreen(
                         restoreState = true
                     }
                 },
-                label = "Stats"
+                label = "Stats",
+                backgroundColor = AppTheme.colors.primaryBackground,
+                modifier = Modifier.weight(1f)
             )
 
             MenuItemCard(
@@ -70,9 +77,13 @@ fun MenuScreen(
                         restoreState = true
                     }
                 },
-                label = "Pomodoro"
+                label = "Pomodoro",
+                backgroundColor = AppTheme.colors.primaryBackground,
+                modifier = Modifier.weight(1f)
             )
         }
+
     }
+
 
 }

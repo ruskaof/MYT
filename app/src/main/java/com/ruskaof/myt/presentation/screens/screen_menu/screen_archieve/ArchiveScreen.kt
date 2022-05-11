@@ -48,6 +48,7 @@ fun ArchiveScreen(
 
     Scaffold(
         topBar = { TopBar(text = "Archive") },
+        backgroundColor = AppTheme.colors.primaryBackground
     ) {
         if (dialogIsOpen.value) {
             RedactionPlanDialog(openDialogCustom = dialogIsOpen, onOk = {

@@ -1,13 +1,13 @@
 package com.ruskaof.myt.presentation.screens.screen_menu.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -32,14 +32,18 @@ fun MenuItemCard(
     icon: ImageVector,
     iconColor: Color,
     onClick: () -> Unit,
-    label: String
+    label: String,
+    backgroundColor: Color,
+    modifier: Modifier = Modifier
 ) {
-    Surface(
-        modifier = Modifier
+    Card(
+        modifier = modifier
             .padding(AppTheme.shapes.defaultPaddingFromStart)
-            .size(size),
+            .fillMaxSize(),
+        border = BorderStroke(2.dp, AppTheme.colors.primary),
         shape = RoundedCornerShape(10),
-        elevation = 5.dp
+        elevation = 5.dp,
+        backgroundColor = backgroundColor
     ) {
         Box(
             modifier = Modifier
@@ -75,5 +79,11 @@ fun MenuItemCard(
 @Preview
 @Composable
 fun MenuItemCardPreview() {
-    MenuItemCard(icon = Icons.Default.Star, iconColor = Color.Black, onClick = {}, label = "label")
+    MenuItemCard(
+        icon = Icons.Default.Star,
+        iconColor = Color.Black,
+        onClick = {},
+        label = "label",
+        backgroundColor = Color.White
+    )
 }
