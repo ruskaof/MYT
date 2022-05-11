@@ -1,4 +1,4 @@
-package com.ruskaof.myt.presentation.main.screen_new_plan.components
+package com.ruskaof.myt.presentation.screens.screen_new_plan.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.ruskaof.myt.presentation.main.navigation.NavigationComponent
+import com.ruskaof.myt.common.Constants
+import com.ruskaof.myt.presentation.navigation.NavigationComponent
+import com.ruskaof.myt.presentation.notifications.createNotificationChannel
 import com.ruskaof.myt.presentation.theme.AppTheme
 import com.ruskaof.myt.presentation.theme.MainTheme
 import com.ruskaof.myt.presentation.theme.darkColorPallet
@@ -29,7 +32,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val context = this
             val isDarkModeValue = isSystemInDarkTheme()
             val isDarkMode = remember { mutableStateOf(isDarkModeValue) }
             val systemUiController = rememberSystemUiController()
@@ -43,6 +45,10 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
+            LaunchedEffect(true) {
+                createNotificationChannel(Constants.NOTIFICATION_CHANNEL_ID, this@MainActivity)
+            }
+
 
             val navController: NavHostController = rememberNavController()
             MainTheme(
@@ -53,7 +59,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(AppTheme.colors.primaryBackground)
                 ) {
-                    NavigationComponent(navController = navController, context = context)
+                    NavigationComponent(navController = navController)
                 }
             }
         }
