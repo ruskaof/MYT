@@ -15,6 +15,7 @@ Current features are:
  - Deleting plans from scedule by long-pressing on them and confirming it in a dialog.
  - Bottom navigation bar  to navigate through screens.
  - Stats screen where you can see  your top-5 plans by your time spent on them in a bar chart and overall stats by time in a pie-chart.
+ - (new!!) pomodoro screen - countdown timer with 25 minutes of work and 5 minutes of rest each period
 
 There are lots of things I still want to add and I'm still working on them.
 
